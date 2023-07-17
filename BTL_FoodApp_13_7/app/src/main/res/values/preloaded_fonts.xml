@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/autour_one</item>
+        <item>@font/b612_mono_bold</item>
+        <item>@font/baloo_tammudu</item>
+        <item>@font/bigshot_one</item>
+        <item>@font/calistoga</item>
+        <item>@font/carter_one</item>
+        <item>@font/headland_one</item>
+        <item>@font/leckerli_one</item>
+        <item>@font/lemon</item>
+        <item>@font/lora_bold</item>
+        <item>@font/marko_one</item>
+        <item>@font/new_rocker</item>
+        <item>@font/sonsie_one</item>
+        <item>@font/trade_winds</item>
+    </array>
+</resources>
