@@ -53,21 +53,6 @@ public class Fragment_trang_chu extends Fragment {
         //Hiển thị danh sách danh mục món ăn
         homeHorizontalRec = view.findViewById(R.id.home_hor_rec);
         homeHormodelList = new ArrayList<>();
-        homeHorizontalRec = view.findViewById(R.id.home_hor_rec);
-        homeHormodelList = new ArrayList<>();
-//        String mgs;
-//
-//        if (mydao.getCategory().moveToFirst()) {
-//            do {
-//                String name = mydao.getCategory().getString(0);
-//                int image = mydao.getCategory().getInt(1);
-////                homeHormodelList.add(new Category(image, name));
-//                mgs = name;
-//            } while (mydao.getCategory().moveToNext());
-//
-//            Toast.makeText(MainActivity.this, )
-//            mydao.getCategory().close();
-//        }
 
 
 

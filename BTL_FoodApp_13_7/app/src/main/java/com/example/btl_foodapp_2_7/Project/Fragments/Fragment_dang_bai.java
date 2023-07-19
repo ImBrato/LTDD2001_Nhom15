@@ -19,7 +19,7 @@ import com.example.btl_foodapp_2_7.R;
 
 
 public class Fragment_dang_bai extends Fragment {
-    private TextView btn_taoct;
+    private LinearLayout btn_taoct;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

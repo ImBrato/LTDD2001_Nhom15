@@ -23,15 +23,13 @@
             android:exported="false" />
         <activity
             android:name=".Project.Activity.LoginActivity"
-            android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".Project.Activity.IntroActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Project.Activity.DetailActivity"
+            android:exported="true" />
         <activity
             android:name=".Project.Activity.MainActivity"
             android:exported="true"
@@ -42,9 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Project.Activity.IntroActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
