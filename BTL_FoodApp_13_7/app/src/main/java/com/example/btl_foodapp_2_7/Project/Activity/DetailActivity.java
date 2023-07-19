@@ -37,12 +37,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         ArrayList<ProductFoodShare> items = new ArrayList<>();
-        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
-        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
-        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
-        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
-        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
-        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
+//        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
+//        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
+//        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
+//        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
+//        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
+//        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFood = findViewById(R.id.view6);
         recyclerViewFood.setLayoutManager(linearLayoutManager);
