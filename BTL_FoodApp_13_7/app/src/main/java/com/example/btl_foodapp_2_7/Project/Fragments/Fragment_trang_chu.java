@@ -1,11 +1,15 @@
 package com.example.btl_foodapp_2_7.Project.Fragments;
 
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,7 +43,7 @@ public class Fragment_trang_chu extends Fragment {
     List<Category> homeHormodelList;
     CategoryListAdapter homeHorAdapter;
 //    MyDAO mydao;
-
+    CheckBox checkFav;
 
     private Handler handler = new Handler();
 
@@ -135,24 +139,38 @@ public class Fragment_trang_chu extends Fragment {
 
 
     //foodshare
+    @SuppressLint("Range")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SQLiteDatabase db = MainActivity.getDatabase();
+//
+        Cursor cursor = db.rawQuery("SELECT food.name as 'foodname', food.description as 'description', food.img as 'img', food.thoiGianLam as 'thoiGianLam', food.rate as 'rate', food.ngayDang as 'ngayDang', food.favorite as 'favorite', user.name FROM food, user  where food.userID = user.id", null);
         ArrayList<ProductFoodShare> items = new ArrayList<>();
-        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
-        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
-        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
-        items.add(new ProductFoodShare("Huỳnh Minh Hoàng","Chân gà chiên giòn","Cách làm chân gà chiên sốt giòn", "share",75000,15,5,5,123));
-        items.add(new ProductFoodShare("Nguyễn Thanh Thuyền","Gà nướng muối ớt","Cách làm gà nướng muối ớt ngon hết nấc", "share",205000,35,5,5,55));
-        items.add(new ProductFoodShare("Nguyễn Toàn Mỹ","Lòng heo xào chua ngọt","Lòng heo xào chua ngọt", "share",30000,10,5,5,225));
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        while (cursor.moveToNext()) {
+//            String name = cursor.getString(cursor.getColumnIndex("user.name"))
+            String username = cursor.getString(cursor.getColumnIndex("name"));
+//            Integer value = Integer.valueOf(cursor.getColumnName(7));
+            String title = cursor.getString(cursor.getColumnIndex("foodname"));
+            String description = cursor.getString(cursor.getColumnIndex("description"));
+            String img = cursor.getString(cursor.getColumnIndex("img"));
+            String time = cursor.getString(cursor.getColumnIndex("thoiGianLam"));
+            Integer rate = Integer.valueOf(cursor.getString(cursor.getColumnIndex("rate")));
+            String dateTime = cursor.getString(cursor.getColumnIndex("ngayDang"));
+            Integer fav = Integer.valueOf(cursor.getString(cursor.getColumnIndex("favorite")));
+            items.add(new ProductFoodShare(username, title, description, img, time, rate, fav));
+        }
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFood = view.findViewById(R.id.view1);
         recyclerViewFood.setLayoutManager(linearLayoutManager);
 
 
         adapterFoodList= new FoodListAdapter(items);
         recyclerViewFood.setAdapter(adapterFoodList);
+
+
+
 
     }
 

@@ -2,7 +2,11 @@ package com.example.btl_foodapp_2_7.Project.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -15,6 +19,8 @@ import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_dang_bai;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_trang_chu;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_yeu_thich;
 import com.example.btl_foodapp_2_7.R;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,17 +44,26 @@ public class MainActivity extends AppCompatActivity {
     private TextView caidatTxt1;
     private TextView caidatTxt;
 
+    private static SQLiteDatabase db;
 
+    public static SQLiteDatabase getDatabase() {
+        return db;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+//        SharedPreferences preferences = null;
+//        Map<String, ?> allEntries = preferences.getAll();
+//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+//            Log.d("TAG", entry.getKey() + ": " + entry.getValue().toString());
+//        }
+        
         //slide banner
 
-
+        db = openOrCreateDatabase("Cookpad.db", MODE_PRIVATE, null);
 
 //        code botom
         trangchuLayout = findViewById(R.id.trangchuLayout);
@@ -72,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
         dangbaiLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.homeFragment, Fragment_trang_chu.class, null).commit();
-
             }
         });
 

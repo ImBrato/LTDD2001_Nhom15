@@ -7,23 +7,21 @@ public class ProductFoodShare implements Serializable {
     private String title;
     private String description;
     private String picUrl;
-    private double price;
-    private int time;
+
+    private String time;
     private int energy;
-    private double score;
+    private int score;
 
     private int score1Txt;
     private int numberinCart;
 
-    public ProductFoodShare(String nameTxt,String title, String description, String picUrl, double price, int time, int energy, double score, int score1Txt) {
+    public ProductFoodShare(String nameTxt,String title, String description, String picUrl, String time, int score, int score1Txt) {
         this.picUrl = picUrl;
         this.time = time;
         this.title = title;
         this.score = score;
         this.nameTxt = nameTxt;
         this.score1Txt = score1Txt;
-
-        this.price = price;
         this.description = description;
         this.energy = energy;
 
@@ -57,11 +55,8 @@ public class ProductFoodShare implements Serializable {
         return picUrl;
     }
 
-    public double getPrice() {
-        return price;
-    }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -69,7 +64,7 @@ public class ProductFoodShare implements Serializable {
         return energy;
     }
 
-    public double getScore() {
+    public int getScore() {
         return score;
     }
 
@@ -85,11 +80,8 @@ public class ProductFoodShare implements Serializable {
         this.picUrl = picUrl;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -97,7 +89,7 @@ public class ProductFoodShare implements Serializable {
         this.energy = energy;
     }
 
-    public void setScore(double score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
