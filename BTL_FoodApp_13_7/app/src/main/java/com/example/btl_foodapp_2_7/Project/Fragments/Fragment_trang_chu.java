@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +26,7 @@ import com.example.btl_foodapp_2_7.Project.Adapter.CategoryListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.FoodListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.SlideAdapter;
 import com.example.btl_foodapp_2_7.Project.Model.Category;
-import com.example.btl_foodapp_2_7.Project.Model.ProductFoodShare;
+import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
 
 import java.util.ArrayList;
@@ -132,7 +131,7 @@ public class Fragment_trang_chu extends Fragment {
         SQLiteDatabase db = MainActivity.getDatabase();
 //
         Cursor cursor = db.rawQuery("SELECT food.name as 'foodname', food.description as 'description', food.img as 'img', food.thoiGianLam as 'thoiGianLam', food.rate as 'rate', food.ngayDang as 'ngayDang', food.favorite as 'favorite', user.name FROM food, user  where food.userID = user.id", null);
-        ArrayList<ProductFoodShare> items = new ArrayList<>();
+        ArrayList<Food> items = new ArrayList<>();
         while (cursor.moveToNext()) {
 //            String name = cursor.getString(cursor.getColumnIndex("user.name"))
             String username = cursor.getString(cursor.getColumnIndex("name"));
@@ -144,7 +143,8 @@ public class Fragment_trang_chu extends Fragment {
             Integer rate = Integer.valueOf(cursor.getString(cursor.getColumnIndex("rate")));
             String dateTime = cursor.getString(cursor.getColumnIndex("ngayDang"));
             Integer fav = Integer.valueOf(cursor.getString(cursor.getColumnIndex("favorite")));
-            items.add(new ProductFoodShare(username, title, description, img, time, rate, fav));
+            items.add(new Food(title, description, img, time, rate, fav, 1));
+//            public ProductFoodShare(String tenTacGia,String tenMonAn, String description, String picUrl, String time, int luotDanhGia)
         }
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFood = view.findViewById(R.id.view1);

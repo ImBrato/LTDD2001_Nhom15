@@ -18,6 +18,7 @@ import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_cai_dat;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_dang_bai;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_trang_chu;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_yeu_thich;
+import com.example.btl_foodapp_2_7.Project.Model.FoodDataSource;
 import com.example.btl_foodapp_2_7.R;
 
 import java.util.Map;
@@ -55,13 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        SharedPreferences preferences = null;
-//        Map<String, ?> allEntries = preferences.getAll();
-//        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-//            Log.d("TAG", entry.getKey() + ": " + entry.getValue().toString());
-//        }
-        
-        //slide banner
 
         db = openOrCreateDatabase("Cookpad.db", MODE_PRIVATE, null);
 
@@ -131,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         dangbaiLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 if (selecTab != 2) {
