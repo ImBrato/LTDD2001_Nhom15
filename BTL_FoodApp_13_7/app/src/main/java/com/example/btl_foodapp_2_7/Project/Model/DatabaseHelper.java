@@ -1,10 +1,14 @@
 package com.example.btl_foodapp_2_7.Project.Model;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String DATABASE_NAME = "food_app.db";
@@ -66,8 +70,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    
+    void addFood(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<ContentValues> food = new ArrayList<>();
+        ContentValues cv1 = createContentValuesFood("Gà ", "Nướng rất ngon", "", "1 tiếng", 100, 50,101);
 
+    }
 
+    private ContentValues createContentValuesFood(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, int userId){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME_FOOD, tenMonAn);
+        cv.put(COLUMN_DESCRIPTION, description);
+
+        cv.put(COLUMN_PIC_URL, picUrl);
+        cv.put(COLUMN_TIME, time);
+        cv.put(COLUMN_LUOT_DANH_GIA, luotDanhGia);
+        cv.put(COLUMN_LUOT_TIM, luotTim);
+        return cv;
+    }
 
 }

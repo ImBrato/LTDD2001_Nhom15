@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.Project.Model.FoodDataSource;
 import com.example.btl_foodapp_2_7.R;
 
@@ -40,6 +41,28 @@ public class DangBaiActivity extends AppCompatActivity {
         thoiGianNau = findViewById(R.id.thoigianNau);
         moTa = findViewById(R.id.moTa);
 
+        dangBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, int userId) {
+                    // Tạo một đối tượng Food từ dữ liệu người dùng nhập
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,5,1);
+
+                    // Khởi tạo một đối tượng FoodDataSource
+                    FoodDataSource dataSource = new FoodDataSource(DangBaiActivity.this);
+                    dataSource.open();
+                    long insertedId = dataSource.insertFood(newFood);
+
+                    dataSource.close();
+
+                    // Kiểm tra xem việc thêm vào CSDL có thành công hay không
+                    if (insertedId != -1) {
+                       showToast(getTextMess(tenMonAn));
+                    } else {
+                    showToast("that bai");
+                    }
+            }
+        });
 
 
 
@@ -74,5 +97,8 @@ public class DangBaiActivity extends AppCompatActivity {
     }
     private void showToast(String message) {
         Toast.makeText(DangBaiActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+    public String getTextMess(EditText name){
+        return name.getText().toString();
     }
 }

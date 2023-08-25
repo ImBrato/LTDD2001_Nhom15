@@ -39,6 +39,8 @@ public class FoodDataSource {
         return database.query(DatabaseHelper.TABLE_FOOD, null, null, null, null, null, null);
     }
 
+
+
     // ... Các phương thức truy vấn và tương tác khác
 
 }
