@@ -18,6 +18,7 @@ import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_cai_dat;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_dang_bai;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_trang_chu;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_yeu_thich;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.FoodDataSource;
 import com.example.btl_foodapp_2_7.R;
 
@@ -45,19 +46,29 @@ public class MainActivity extends AppCompatActivity {
     private TextView caidatTxt1;
     private TextView caidatTxt;
 
-    private static SQLiteDatabase db;
 
-    public static SQLiteDatabase getDatabase() {
-        return db;
-    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        db = openOrCreateDatabase("Cookpad.db", MODE_PRIVATE, null);
+        SharedPreferences  prefs = getPreferences(this.MODE_PRIVATE);
+        if(prefs.getBoolean("firstRun", true)) {
+            DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+            db.addFood();
+            db.addUser();
+            db.addBuaAn();
+            prefs.edit().putBoolean("firstRun", false).commit();
+        }
+        DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+        db.recreateDatabase();
+        db.addFood();
+        db.addUser();
+        db.addBuaAn();
+        db.saveFood(1,2);
 
 //        code botom
         trangchuLayout = findViewById(R.id.trangchuLayout);

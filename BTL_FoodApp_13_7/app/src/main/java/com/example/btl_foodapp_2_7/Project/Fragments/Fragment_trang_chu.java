@@ -26,6 +26,7 @@ import com.example.btl_foodapp_2_7.Project.Adapter.CategoryListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.FoodListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.SlideAdapter;
 import com.example.btl_foodapp_2_7.Project.Model.Category;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
 
@@ -128,30 +129,14 @@ public class Fragment_trang_chu extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SQLiteDatabase db = MainActivity.getDatabase();
-//
-        Cursor cursor = db.rawQuery("SELECT food.name as 'foodname', food.description as 'description', food.img as 'img', food.thoiGianLam as 'thoiGianLam', food.rate as 'rate', food.ngayDang as 'ngayDang', food.favorite as 'favorite', user.name FROM food, user  where food.userID = user.id", null);
-        ArrayList<Food> items = new ArrayList<>();
-        while (cursor.moveToNext()) {
-//            String name = cursor.getString(cursor.getColumnIndex("user.name"))
-            String username = cursor.getString(cursor.getColumnIndex("name"));
-//            Integer value = Integer.valueOf(cursor.getColumnName(7));
-            String title = cursor.getString(cursor.getColumnIndex("foodname"));
-            String description = cursor.getString(cursor.getColumnIndex("description"));
-            String img = cursor.getString(cursor.getColumnIndex("img"));
-            String time = cursor.getString(cursor.getColumnIndex("thoiGianLam"));
-            Integer rate = Integer.valueOf(cursor.getString(cursor.getColumnIndex("rate")));
-            String dateTime = cursor.getString(cursor.getColumnIndex("ngayDang"));
-            Integer fav = Integer.valueOf(cursor.getString(cursor.getColumnIndex("favorite")));
-            items.add(new Food(title, description, img, time, rate, fav, 1));
-//            public ProductFoodShare(String tenTacGia,String tenMonAn, String description, String picUrl, String time, int luotDanhGia)
-        }
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFood = view.findViewById(R.id.view1);
         recyclerViewFood.setLayoutManager(linearLayoutManager);
 
 
-        adapterFoodList= new FoodListAdapter(items);
+        adapterFoodList= new FoodListAdapter(db2.getAllFoods());
         recyclerViewFood.setAdapter(adapterFoodList);
 
 

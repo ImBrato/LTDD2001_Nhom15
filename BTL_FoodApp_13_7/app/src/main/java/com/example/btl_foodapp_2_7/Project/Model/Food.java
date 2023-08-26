@@ -10,32 +10,52 @@ public class Food implements Serializable {
     private String description;
     private String picUrl;
 
+    
     private String time;
     private int energy;
     private int luotDanhGia;
 
     private int luotTim;
-
+    private String ngayDang;
+    private int idBuaAn;
     private int userId;
 
     {
         id++;
     }
 
-    public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, int userId) {
+    public Food (){
+
+    }
+
+    public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
         this.id = id;
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
         this.setLuotDanhGia(luotDanhGia);
         this.luotTim = luotTim;
+        this.ngayDang = ngayDang;
         this.description = description;
         this.setUserId(userId);
+        this.idBuaAn = idBuaAn;
+
+
+    }
+    public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang,  String userName) {
+        this.id = id;
+        this.picUrl = picUrl;
+        this.time = time;
+        this.tenMonAn = tenMonAn;
+        this.setLuotDanhGia(luotDanhGia);
+        this.luotTim = luotTim;
+        this.ngayDang = ngayDang;
+        this.description = description;
+        this.tenTacGia = userName;
 
 
 
     }
-
     public int getLuotTim() {
         return luotTim;
     }
@@ -109,5 +129,21 @@ public class Food implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getNgayDang() {
+        return ngayDang;
+    }
+
+    public void setNgayDang(String ngayDang) {
+        this.ngayDang = ngayDang;
+    }
+
+    public int getIdBuaAn() {
+        return idBuaAn;
+    }
+
+    public void setIdBuaAn(int idBuaAn) {
+        this.idBuaAn = idBuaAn;
     }
 }

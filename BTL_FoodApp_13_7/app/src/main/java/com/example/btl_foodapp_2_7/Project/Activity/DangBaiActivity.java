@@ -46,7 +46,7 @@ public class DangBaiActivity extends AppCompatActivity {
             public void onClick(View v) {
 //public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, int userId) {
                     // Tạo một đối tượng Food từ dữ liệu người dùng nhập
-                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,5,1);
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,5,"2", 1,1);
 
                     // Khởi tạo một đối tượng FoodDataSource
                     FoodDataSource dataSource = new FoodDataSource(DangBaiActivity.this);

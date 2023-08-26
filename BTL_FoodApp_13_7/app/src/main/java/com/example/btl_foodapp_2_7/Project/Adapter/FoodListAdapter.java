@@ -38,7 +38,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTenMonAn());
         holder.nameTxt.setText(items.get(position).getTenTacGia());
-        holder.timeTxt.setText(items.get(position).getTime() + " min");
+        holder.timeTxt.setText(items.get(position).getTime());
         holder.scoreTxt.setText("" + items.get(position).getLuotDanhGia());
         holder.score1Txt.setText("" + items.get(position).getLuotTim());
         int currentScore = holder.getCurrentScore1();

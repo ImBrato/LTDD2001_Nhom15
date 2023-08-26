@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        db = openOrCreateDatabase("Cookpad.db", MODE_PRIVATE, null);
+        db = openOrCreateDatabase("food_app.db", MODE_PRIVATE, null);
         username = findViewById(R.id.inputUsername);
         password = findViewById(R.id.editTextTextPassword);
 
@@ -71,8 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(LoginActivity.this, "Login thanh cong", Toast.LENGTH_SHORT).show();
                     SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+
                     SharedPreferences.Editor editor = preferences.edit();
+
                     editor.putString("username", usernameTxt);
+
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
 

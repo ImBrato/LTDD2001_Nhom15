@@ -172,33 +172,33 @@
                         app:layout_constraintTop_toBottomOf="@+id/tenMonAn" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:text="Mo ta"
-                        android:textColor="#4E4E4E"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/moTa"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/moTa" />
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="32dp"-->
+                    <!--                        android:text="Mo ta"-->
+                    <!--                        android:textColor="#4E4E4E"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:textStyle="bold"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="@+id/moTa"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@+id/moTa" />-->
 
-                    <EditText
-                        android:id="@+id/moTa"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_marginBottom="16dp"
-                        android:backgroundTint="#ABAAAA"
-                        android:hint="   1 tiếng 30 phút    "
-                        android:textColorHint="#ABAAAA"
-                        android:textSize="15dp"
+                    <!--                    <EditText-->
+                    <!--                        android:id="@+id/moTa"-->
+                    <!--                        android:layout_width="130dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        android:layout_marginEnd="32dp"-->
+                    <!--                        android:layout_marginBottom="16dp"-->
+                    <!--                        android:backgroundTint="#ABAAAA"-->
+                    <!--                        android:hint="   1 tiếng 30 phút    "-->
+                    <!--                        android:textColorHint="#ABAAAA"-->
+                    <!--                        android:textSize="15dp"-->
 
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/thoigianNau" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/thoigianNau" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -223,114 +223,144 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Nguyên Liệu"
+                    android:text="Nguyên liệu và cách làm"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_dangbai_bacham"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintEnd_toStartOf="@+id/textView13"
-                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:text="Nguyên liệu"
+                    android:textColor="#4E4E4E"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/nguyenLieu_cachLam1"
+                    app:layout_constraintEnd_toStartOf="@+id/nguyenLieu_cachLam1"
+                    app:layout_constraintTop_toTopOf="@+id/nguyenLieu_cachLam1" />
 
                 <EditText
-                    android:id="@+id/textView13"
+                    android:id="@+id/nguyenLieu_cachLam1"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
                     android:backgroundTint="#ABAAAA"
-                    android:hint="   250g bột                               "
+                    android:hint="vd: 1 con gà và 250g bột, gia vị"
                     android:linksClickable="false"
                     android:textColorHint="#ABAAAA"
                     android:textSize="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/nguyenLieu_cachLam2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_dangbai_bagach"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toEndOf="@+id/textView13"
-                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+                <!--                //-->
 
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_dangbai_bacham"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintEnd_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:text="Cách làm"
+                    android:textColor="#4E4E4E"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/nguyenLieu_cachLam2"
+                    app:layout_constraintEnd_toStartOf="@+id/nguyenLieu_cachLam1"
+                    app:layout_constraintTop_toBottomOf="@+id/nguyenLieu_cachLam1" />
 
                 <EditText
-                    android:id="@+id/textView12"
+                    android:id="@+id/nguyenLieu_cachLam2"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:backgroundTint="#ABAAAA"
-                    android:hint="   100ml nước                           "
+                    android:hint="vd: Sơ chế gà, Ướp gà, Nướng gà"
+                    android:linksClickable="false"
+                    android:padding="70px"
                     android:textColorHint="#ABAAAA"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_dangbai_bagach"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toEndOf="@+id/textView12"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12">
+                    app:layout_constraintTop_toBottomOf="@+id/nguyenLieu_cachLam1" />
 
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_update_addct" />
+                <!--&lt;!&ndash;                &ndash;&gt;sd-->
 
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="#4E4E4E"
-                        android:text="Phần"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+
+                <!--                <ImageView-->
+                <!--                    android:layout_width="20dp"-->
+                <!--                    android:layout_height="20dp"-->
+                <!--                    android:layout_marginEnd="10dp"-->
+                <!--                    android:src="@drawable/ic_dangbai_bacham"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+                <!--                    app:layout_constraintEnd_toStartOf="@+id/textView12"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView12" />-->
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/textView12"-->
+                <!--                    android:layout_width="230dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:backgroundTint="#ABAAAA"-->
+                <!--                    android:hint="   100ml nước                           "-->
+                <!--                    android:textColorHint="#ABAAAA"-->
+                <!--                    android:textSize="15dp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView13" />-->
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView"-->
+                <!--                    android:layout_width="20dp"-->
+                <!--                    android:layout_height="20dp"-->
+                <!--                    android:src="@drawable/ic_dangbai_bagach"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.15"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/textView12"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView12" />-->
+
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/linearLayout9"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="60dp"-->
+                <!--                    android:layout_marginTop="24dp"-->
+                <!--                    android:layout_marginBottom="24dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:orientation="horizontal"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView12">-->
+
+
+                <!--                    <ImageView-->
+                <!--                        android:id="@+id/imageView11"-->
+                <!--                        android:layout_width="35dp"-->
+                <!--                        android:layout_height="35dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:padding="5dp"-->
+                <!--                        app:srcCompat="@drawable/ic_update_addct" />-->
+
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/textView14"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:textColor="#4E4E4E"-->
+                <!--                        android:text="Phần"-->
+                <!--                        android:textSize="16sp"-->
+                <!--                        android:textStyle="bold" />-->
+                <!--                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -345,23 +375,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView12">
 
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_update_addct" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imageView11"-->
+                    <!--                        android:layout_width="35dp"-->
+                    <!--                        android:layout_height="35dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:padding="5dp"-->
+                    <!--                        app:srcCompat="@drawable/ic_update_addct" />-->
 
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Nguyên liệu"
-                        android:textSize="16sp"
-                        android:textColor="#4E4E4E"
-                        android:textStyle="bold" />
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/textView14"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:text="Nguyên liệu"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:textColor="#4E4E4E"-->
+                    <!--                        android:textStyle="bold" />-->
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -382,93 +412,82 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Cách Làm"
+                    android:text="Mô tả"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
                 <TextView
-                    android:id="@+id/imageView"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="1"
-                    android:textSize="14dp"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Mô tả món ăn"
+                    android:textColor="#4E4E4E"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:background="@drawable/bg_upload_cacbuocct"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintEnd_toStartOf="@+id/textView13"
-                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+                    app:layout_constraintBottom_toBottomOf="@+id/moTa"
+                    app:layout_constraintEnd_toStartOf="@+id/moTa"
+                    app:layout_constraintTop_toTopOf="@+id/moTa" />
 
                 <EditText
-                    android:id="@+id/textView13"
+                    android:id="@+id/moTa"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="120dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="32dp"
                     android:backgroundTint="#ABAAAA"
-                    android:hint="   Rửa sạch bí                               "
+                    android:hint="vd: Uớp với sữa chua, ớt bột và nhiều loại gia vị sau đó đem nướng"
                     android:linksClickable="false"
                     android:textColorHint="#ABAAAA"
                     android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_dangbai_bacham"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toEndOf="@+id/textView13"
-                    app:layout_constraintTop_toTopOf="@+id/textView13" />
 
+                <!--                <TextView-->
+                <!--                    android:layout_width="25dp"-->
+                <!--                    android:layout_height="25dp"-->
+                <!--                    android:layout_marginEnd="10dp"-->
+                <!--                    android:text="2"-->
+                <!--                    android:textSize="14dp"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:textAlignment="center"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    android:background="@drawable/bg_upload_cacbuocct"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+                <!--                    app:layout_constraintEnd_toStartOf="@+id/textView12"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView12" />-->
 
-                <TextView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="10dp"
-                    android:text="2"
-                    android:textSize="14dp"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:background="@drawable/bg_upload_cacbuocct"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintEnd_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+                <!--                <EditText-->
+                <!--                    android:id="@+id/textView12"-->
+                <!--                    android:layout_width="230dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:backgroundTint="#ABAAAA"-->
+                <!--                    android:hint="   Chuẩn bị và làm sạch tôm khô                          "-->
+                <!--                    android:textColorHint="#ABAAAA"-->
+                <!--                    android:textSize="15dp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView13" />-->
 
-                <EditText
-                    android:id="@+id/textView12"
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:backgroundTint="#ABAAAA"
-                    android:hint="   Chuẩn bị và làm sạch tôm khô                          "
-                    android:textColorHint="#ABAAAA"
-                    android:textSize="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_dangbai_bacham"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.15"
-                    app:layout_constraintStart_toEndOf="@+id/textView12"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView"-->
+                <!--                    android:layout_width="20dp"-->
+                <!--                    android:layout_height="20dp"-->
+                <!--                    android:src="@drawable/ic_dangbai_bacham"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.15"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/textView12"-->
+                <!--                    app:layout_constraintTop_toTopOf="@+id/textView12" />-->
 
                 <LinearLayout
                     android:id="@+id/linearLayout9"
@@ -484,23 +503,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView12">
 
 
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_update_addct" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imageView11"-->
+                    <!--                        android:layout_width="35dp"-->
+                    <!--                        android:layout_height="35dp"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:padding="5dp"-->
+                    <!--                        app:srcCompat="@drawable/ic_update_addct" />-->
 
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Thêm bước"
-                        android:textColor="#4E4E4E"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/textView14"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_weight="1"-->
+                    <!--                        android:text="Thêm bước"-->
+                    <!--                        android:textColor="#4E4E4E"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:textStyle="bold" />-->
                 </LinearLayout>
 
 
