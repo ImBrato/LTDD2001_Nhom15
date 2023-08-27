@@ -17,6 +17,9 @@ public class Food implements Serializable {
     private int energy;
     private int luotDanhGia;
 
+    private String nguyenLieu;
+    private  String cachLam;
+
     private int luotTim;
     private String ngayDang;
     private int idBuaAn;
@@ -30,7 +33,7 @@ public class Food implements Serializable {
 
     }
 
-    public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
+    public Food(String tenMonAn, String description, String cachLam, String nguyenLieu, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
         this.id = id;
         this.picUrl = picUrl;
         this.time = time;
@@ -147,5 +150,21 @@ public class Food implements Serializable {
 
     public void setIdBuaAn(int idBuaAn) {
         this.idBuaAn = idBuaAn;
+    }
+
+    public String getNguyenLieu() {
+        return nguyenLieu;
+    }
+
+    public void setNguyenLieu(String nguyenLieu) {
+        this.nguyenLieu = nguyenLieu;
+    }
+
+    public String getCachLam() {
+        return cachLam;
+    }
+
+    public void setCachLam(String cachLam) {
+        this.cachLam = cachLam;
     }
 }

@@ -25,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FOOD_ID = "id";
     protected static final String COLUMN_NAME_FOOD = "nameFood";
     protected static final String COLUMN_DESCRIPTION = "description";
+    protected static final String COLUMN_CACHLAM = "cachLam";
+    protected static final String COLUMN_NGUYENLIEU = "nguyenLieu";
     protected static final String COLUMN_PIC_URL = "picUrl";
     protected static final String COLUMN_TIME = "time";
     protected static final String COLUMN_LUOT_DANH_GIA = "luotDanhGia";
@@ -302,9 +304,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<Food> getLikedFoodsByUserId(int userId) {
+    public ArrayList<Food> getLikedFoodsByUserId(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<Food> likedFoods = new ArrayList<>();
+        ArrayList<Food> likedFoods = new ArrayList<>();
 
         String query = "SELECT f.* FROM " + TABLE_FOOD + " f INNER JOIN " + TABLE_SAVED_FOOD +
                 " sf ON f." + COLUMN_FOOD_ID + " = sf." + COLUMN_FOOD_ID_FK +
@@ -327,13 +329,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 likedFoods.add(food);
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
-
         return likedFoods;
     }
 
+    @SuppressLint("Range")
+    public int getIduserByName(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT id FROM user WHERE username = ?";
+        String[] selectionArgs = {String.valueOf(username)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        int id = 0;
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(cursor.getColumnIndex("id"));
+        }
+        cursor.close();
+        db.close();
+
+        return id;
+    }
 
 
 }

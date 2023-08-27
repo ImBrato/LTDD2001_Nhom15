@@ -1,6 +1,7 @@
 package com.example.btl_foodapp_2_7.Project.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.example.btl_foodapp_2_7.Project.Activity.DaLuuActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
 
@@ -56,6 +60,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
+
         TextView titleTxt,timeTxt,scoreTxt,score1Txt, nameTxt;
         CheckBox btnLike;
         ImageView pic;
@@ -78,15 +83,19 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    DatabaseHelper db2 = new DatabaseHelper(context);
                     int clickedPosition = getAdapterPosition();
-
+                    SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+                    String username = preferences.getString("username", "");
+                    int id = db2.getIduserByName(username);
                     if (clickedPosition != RecyclerView.NO_POSITION) {
                         if (btnLike.isChecked()) {
+                            db2.saveFood(id, 1);
                             currentScore1++;
                         } else {
                             currentScore1--;
+                            db2.unsaveFood(id, 1);
                         }
-
                         score1Txt.setText(String.valueOf(currentScore1));
 //                        boolean isChecked = btnLike.isChecked();
 //                        String message = isChecked ? "Đã thích mục " : "Bỏ thích mục ";

@@ -13,10 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.btl_foodapp_2_7.Project.Activity.ChinhSachActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.DaLuuActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.DangBaiActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.LoginActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.TrungTamHoTroActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.VeChungToiActivity;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.R;
 
 import java.util.zip.Inflater;
@@ -74,17 +82,54 @@ public class Fragment_cai_dat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_cai_dat, container, false);
+        View view = inflater.inflate(R.layout.fragment_cai_dat, container, false);
+        ImageView veChungToiButton = view.findViewById(R.id.VeChungToi);
+        ImageView trungTamHoTroButton = view.findViewById(R.id.TrungTamHoTro);
+        ImageView daLuuButton = view.findViewById(R.id.imageViewDaLuu);
+        ImageView chinhSachButton = view.findViewById(R.id.ChinhSachNguoiDung);
 
+
+        daLuuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DaLuuActivity.class);
+                startActivity(intent);
+            }
+        });
+        veChungToiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VeChungToiActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        trungTamHoTroButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TrungTamHoTroActivity.class);
+                startActivity(intent);
+            }
+        });
+        chinhSachButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChinhSachActivity.class);
+                startActivity(intent);
+            }
+        });
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+
 //        String username = preferences.getString("username", "");
         if (preferences.contains("username")) {
-            String username = preferences.getString("username", "");
+            String username = preferences.getString("username", "");;
             txtLogout = view.findViewById(R.id.textView11);
             txtLogout.setText(username.toString());
             Toast.makeText(getContext(), "Login đã đăng nhập với tên đăng nhập: " + username, Toast.LENGTH_SHORT).show();
@@ -103,6 +148,6 @@ public class Fragment_cai_dat extends Fragment {
         });
 
 
-//        EditText editText2 = view.findViewById(R.id.editText2);
+
     }
 }

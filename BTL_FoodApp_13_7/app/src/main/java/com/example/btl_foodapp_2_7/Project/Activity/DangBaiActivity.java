@@ -35,7 +35,7 @@ public class DangBaiActivity extends AppCompatActivity {
     ImageView btnBack;
     private final int GALLEYRY_REQ_CODE = 1000;
     ImageView imgGallery;
-    EditText tenMonAn, thoiGianNau, moTa;
+    EditText tenMonAn, thoiGianNau, moTa, cachLam, nguyenLieu;
     Button dangBai;
 
 
@@ -53,7 +53,8 @@ public class DangBaiActivity extends AppCompatActivity {
         tenMonAn = findViewById(R.id.tenMonAn);
         thoiGianNau = findViewById(R.id.thoigianNau);
         moTa = findViewById(R.id.moTa);
-
+        cachLam = findViewById(R.id.nguyenLieu_cachLam1);
+        nguyenLieu = findViewById(R.id.nguyenLieu_cachLam2);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -63,7 +64,7 @@ public class DangBaiActivity extends AppCompatActivity {
                     // Tạo một đối tượng Food từ dữ liệu người dùng nhập
                     String currentTime = sdf.format(new Date());
                     Log.i("tag", currentTime);
-                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), getTextMess(cachLam), getTextMess(nguyenLieu), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
 
 
                     DatabaseHelper db = new DatabaseHelper(DangBaiActivity.this);
