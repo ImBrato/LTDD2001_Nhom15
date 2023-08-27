@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,6 +91,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                     int id = db2.getIduserByName(username);
                     if (clickedPosition != RecyclerView.NO_POSITION) {
                         if (btnLike.isChecked()) {
+                            Toast.makeText(context, String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
                             db2.saveFood(id, 1);
                             currentScore1++;
                         } else {

@@ -61,6 +61,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_FOOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_NAME_FOOD + " TEXT NOT NULL, " +
             COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
+            COLUMN_NGUYENLIEU + " TEXT NOT NULL, " +
+            COLUMN_CACHLAM + " TEXT NOT NULL, " +
             COLUMN_PIC_URL + " TEXT NOT NULL, " +
             COLUMN_TIME + " TEXT NOT NULL, " +
             COLUMN_LUOT_DANH_GIA + " INTEGER, " +
@@ -109,8 +111,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addFood(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> food = new ArrayList<>();
-        ContentValues cv1 = createContentValuesFood("Gà ", "Nướng rất ngon", "", "1 tiếng", 100, 50, "17/8/2023", 1,  1);
-        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "", "1 tiếng", 100, 50, "18/7/20323", 1,1);
+        ContentValues cv1 = createContentValuesFood("Gà ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "","1 tiếng", 100, 50, "17/8/2023", 1,  1);
+        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "","30 phút",100, 50, "18/7/20323", 1,1);
         food.add(cv1);
         food.add(cv2);
         food.forEach(f ->{
@@ -133,6 +135,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_FOOD, food.getTenMonAn());
         values.put(COLUMN_DESCRIPTION, food.getDescription());
+        values.put(COLUMN_NGUYENLIEU, food.getNguyenLieu());
+        values.put(COLUMN_CACHLAM, food.getCachLam());
         values.put(COLUMN_PIC_URL, food.getPicUrl());
         values.put(COLUMN_TIME, food.getTime());
         values.put(COLUMN_LUOT_DANH_GIA, food.getLuotDanhGia());
@@ -220,10 +224,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return nameFood;
     }
 
-    private ContentValues createContentValuesFood(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId){
+    private ContentValues createContentValuesFood(String tenMonAn, String description, String nguyenLieu, String cachLam, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME_FOOD, tenMonAn);
         cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_NGUYENLIEU, nguyenLieu);
+        cv.put(COLUMN_CACHLAM, cachLam);
         cv.put(COLUMN_PIC_URL, picUrl);
         cv.put(COLUMN_TIME, time);
         cv.put(COLUMN_LUOT_DANH_GIA, luotDanhGia);

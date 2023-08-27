@@ -63,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
             db.addBuaAn();
             prefs.edit().putBoolean("firstRun", false).commit();
         }
-//        DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-//        db.recreateDatabase();
-//        db.addFood();
-//        db.addUser();
-//        db.addBuaAn();
-//        db.saveFood(1,2);
+        DatabaseHelper db = new DatabaseHelper(MainActivity.this);
+        db.recreateDatabase();
+        db.addFood();
+        db.addUser();
+        db.addBuaAn();
+        db.saveFood(1,2);
 
 //        code botom
         trangchuLayout = findViewById(R.id.trangchuLayout);

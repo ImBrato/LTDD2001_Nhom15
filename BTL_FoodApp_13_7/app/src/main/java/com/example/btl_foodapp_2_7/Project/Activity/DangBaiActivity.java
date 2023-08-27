@@ -64,7 +64,7 @@ public class DangBaiActivity extends AppCompatActivity {
                     // Tạo một đối tượng Food từ dữ liệu người dùng nhập
                     String currentTime = sdf.format(new Date());
                     Log.i("tag", currentTime);
-                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), getTextMess(cachLam), getTextMess(nguyenLieu), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), getTextMess(nguyenLieu), getTextMess(cachLam), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
 
 
                     DatabaseHelper db = new DatabaseHelper(DangBaiActivity.this);
@@ -99,12 +99,9 @@ public class DangBaiActivity extends AppCompatActivity {
         if (requestCode == GALLEYRY_REQ_CODE && resultCode == RESULT_OK) {
             // Lấy URI của ảnh từ Intent
             Uri selectedImageUri = data.getData();
-
-            // Hiển thị ảnh lên ImageView
             imgGallery.setImageURI(selectedImageUri);
 
-            // Lưu URI của ảnh để sử dụng sau này (nếu cần)
-            // Do bạn muốn lưu đường dẫn ảnh lên Cloudinary, bạn cần sử dụng selectedImageUri.getPath() để lấy đường dẫn thực sự của ảnh
+
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImageUri, projection, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
