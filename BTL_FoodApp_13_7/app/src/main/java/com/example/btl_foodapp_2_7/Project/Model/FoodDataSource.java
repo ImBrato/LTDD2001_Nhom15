@@ -22,18 +22,19 @@ public class FoodDataSource {
         dbHelper.close();
     }
 
-    public long insertFood(Food food) {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_NAME_FOOD, food.getDescription());
-        values.put(DatabaseHelper.COLUMN_DESCRIPTION, food.getDescription());
-        values.put(DatabaseHelper.COLUMN_PIC_URL, food.getPicUrl());
-        values.put(DatabaseHelper.COLUMN_TIME, food.getTime());
-        values.put(DatabaseHelper.COLUMN_LUOT_DANH_GIA, food.getLuotDanhGia());
-        values.put(DatabaseHelper.COLUMN_LUOT_TIM, food.getLuotTim());
-        values.put(DatabaseHelper.COLUMN_USER_ID_FK, food.getUserId());
-
-        return database.insert(DatabaseHelper.TABLE_FOOD, null, values);
-    }
+//    public long insertFood(Food food) {
+//        ContentValues values = new ContentValues();
+//        values.put(DatabaseHelper.COLUMN_NAME_FOOD, food.getDescription());
+//        values.put(DatabaseHelper.COLUMN_DESCRIPTION, food.getDescription());
+//        values.put(DatabaseHelper.COLUMN_PIC_URL, food.getPicUrl());
+//        values.put(DatabaseHelper.COLUMN_TIME, food.getTime());
+//        values.put(DatabaseHelper.COLUMN_LUOT_DANH_GIA, food.getLuotDanhGia());
+//        values.put(DatabaseHelper.COLUMN_LUOT_TIM, food.getLuotTim());
+//        values.put(DatabaseHelper.COLUMN_USER_ID_FK, food.getUserId());
+//        values.put(DatabaseHelper.COLUMN_BUA_AN_ID_FK, food.getUserId());
+//
+//        return database.insert(DatabaseHelper.TABLE_FOOD, null, values);
+//    }
 
     public Cursor getAllFoods() {
         return database.query(DatabaseHelper.TABLE_FOOD, null, null, null, null, null, null);

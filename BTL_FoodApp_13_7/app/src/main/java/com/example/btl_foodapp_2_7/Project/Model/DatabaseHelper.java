@@ -41,13 +41,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_USER_ID_FK = "user_id"; // Tên cột khóa ngoại trong bảng "food"
 
 
-    private static final String TABLE_BUA_AN = "Bua_An";
-    private static final String COLUMN_BUA_AN_ID = "id";
-    private static final String COLUMN_TEN_BUA_AN = "tenBuaAn";
+    protected static final String TABLE_BUA_AN = "Bua_An";
+    protected static final String COLUMN_BUA_AN_ID = "id";
+    protected static final String COLUMN_TEN_BUA_AN = "tenBuaAn";
 
-    private static final String TABLE_SAVED_FOOD = "MonAn_DaLuu";
-    private static final String COLUMN_SAVED_FOOD_ID = "id";
-    private static final String COLUMN_FOOD_ID_FK = "id_food";
+    protected static final String TABLE_SAVED_FOOD = "MonAn_DaLuu";
+    protected static final String COLUMN_SAVED_FOOD_ID = "id";
+    protected static final String COLUMN_FOOD_ID_FK = "id_food";
 
     // Câu truy vấn tạo bảng BUAN
     private static final String CREATE_TABLE_BUA_AN = "CREATE TABLE " + TABLE_BUA_AN + " (" +
@@ -125,6 +125,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         user.forEach(f ->{
             db.insert(TABLE_USER, null, f);
         });
+    }
+    public long insertFood(Food food) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_FOOD, food.getTenMonAn());
+        values.put(COLUMN_DESCRIPTION, food.getDescription());
+        values.put(COLUMN_PIC_URL, food.getPicUrl());
+        values.put(COLUMN_TIME, food.getTime());
+        values.put(COLUMN_LUOT_DANH_GIA, food.getLuotDanhGia());
+        values.put(COLUMN_LUOT_TIM, food.getLuotTim());
+        values.put(COLUMN_USER_ID_FK, food.getUserId());
+        values.put(COLUMN_NGAY_DANG, food.getNgayDang());
+        values.put(COLUMN_BUA_AN_ID_FK, food.getIdBuaAn());
+
+        return db.insert(TABLE_FOOD, null, values);
     }
     public void addBuaAn(){
         SQLiteDatabase db = this.getWritableDatabase();

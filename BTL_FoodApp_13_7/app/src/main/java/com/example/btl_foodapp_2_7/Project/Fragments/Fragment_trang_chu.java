@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,8 +58,6 @@ public class Fragment_trang_chu extends Fragment {
         //Hiển thị danh sách danh mục món ăn
         homeHorizontalRec = view.findViewById(R.id.home_hor_rec);
         homeHormodelList = new ArrayList<>();
-
-
 
         homeHormodelList.add(new Category(R.drawable.pic_ansang, "Sáng"));
         homeHormodelList.add(new Category(R.drawable.pic_buatrua, "Trưa"));
@@ -130,14 +129,13 @@ public class Fragment_trang_chu extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         DatabaseHelper db2 = new DatabaseHelper(getActivity());
-
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewFood = view.findViewById(R.id.view1);
         recyclerViewFood.setLayoutManager(linearLayoutManager);
 
-
         adapterFoodList= new FoodListAdapter(db2.getAllFoods());
         recyclerViewFood.setAdapter(adapterFoodList);
+
 
 
 

@@ -5,17 +5,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.utils.ObjectUtils;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.Project.Model.FoodDataSource;
 import com.example.btl_foodapp_2_7.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 public class DangBaiActivity extends AppCompatActivity {
 
@@ -32,7 +45,7 @@ public class DangBaiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_bai);
-
+        MediaManager.init(this);
         imgGallery = findViewById(R.id.imgGallery);
         ImageView btnGallery = findViewById(R.id.btnGallery);
 
@@ -41,42 +54,34 @@ public class DangBaiActivity extends AppCompatActivity {
         thoiGianNau = findViewById(R.id.thoigianNau);
         moTa = findViewById(R.id.moTa);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
         dangBai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, int userId) {
                     // Tạo một đối tượng Food từ dữ liệu người dùng nhập
-                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,5,"2", 1,1);
+                    String currentTime = sdf.format(new Date());
+                    Log.i("tag", currentTime);
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
 
-                    // Khởi tạo một đối tượng FoodDataSource
-                    FoodDataSource dataSource = new FoodDataSource(DangBaiActivity.this);
-                    dataSource.open();
-                    long insertedId = dataSource.insertFood(newFood);
 
-                    dataSource.close();
+                    DatabaseHelper db = new DatabaseHelper(DangBaiActivity.this);
+                    db.insertFood(newFood);
+                    showToast("Đăng món ăn thành công");
 
-                    // Kiểm tra xem việc thêm vào CSDL có thành công hay không
-                    if (insertedId != -1) {
-                       showToast(getTextMess(tenMonAn));
-                    } else {
-                    showToast("that bai");
-                    }
+
             }
         });
-
-
-
 
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
                 startActivityForResult(intent, GALLEYRY_REQ_CODE);
-
             }
         });
-
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +92,48 @@ public class DangBaiActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == GALLEYRY_REQ_CODE) {
-                imgGallery.setImageURI(data.getData());
+
+        if (requestCode == GALLEYRY_REQ_CODE && resultCode == RESULT_OK) {
+            // Lấy URI của ảnh từ Intent
+            Uri selectedImageUri = data.getData();
+
+            // Hiển thị ảnh lên ImageView
+            imgGallery.setImageURI(selectedImageUri);
+
+            // Lưu URI của ảnh để sử dụng sau này (nếu cần)
+            // Do bạn muốn lưu đường dẫn ảnh lên Cloudinary, bạn cần sử dụng selectedImageUri.getPath() để lấy đường dẫn thực sự của ảnh
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImageUri, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                String imagePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                // Tiếp tục với việc tải ảnh lên Cloudinary và lưu đường dẫn
+                String requestId = MediaManager.get().upload(imagePath).dispatch();
+                Log.i("url", requestId);
             }
+
+            // Tiếp tục với việc tải ảnh lên Cloudinary và lưu đường dẫn
         }
     }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == GALLEYRY_REQ_CODE && resultCode == RESULT_OK && data != null) {
+//            Uri selectedImageUri = data.getData();
+//            String imagePath = getRealPathFromUri(selectedImageUri);
+//            Log.i("img path", imagePath);
+//            // Lưu đường dẫn ảnh vào CSDL hoặc upload lên cloud ở đây
+//        }
+//    }
+
+
+
+
     private void showToast(String message) {
         Toast.makeText(DangBaiActivity.this, message, Toast.LENGTH_SHORT).show();
     }

@@ -4,13 +4,15 @@ import java.io.Serializable;
 
 public class Food implements Serializable {
 
+
     private static int id;
     private String tenTacGia;
     private String tenMonAn;
     private String description;
     private String picUrl;
 
-    
+
+
     private String time;
     private int energy;
     private int luotDanhGia;
