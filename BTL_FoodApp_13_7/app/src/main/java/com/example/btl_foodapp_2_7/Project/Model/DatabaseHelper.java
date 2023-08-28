@@ -309,6 +309,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public boolean checkIfFoodIsSaved(int userId, int foodId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columns = {COLUMN_SAVED_FOOD_ID};
+        String selection = COLUMN_USER_ID_FK + " = ? AND " + COLUMN_FOOD_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId), String.valueOf(foodId)};
+
+        Cursor cursor = db.query(TABLE_SAVED_FOOD, columns, selection, selectionArgs, null, null, null);
+
+        boolean isSaved = cursor.getCount() > 0;
+
+        cursor.close();
+        return isSaved;
+    }
+
+
     @SuppressLint("Range")
     public ArrayList<Food> getLikedFoodsByUserId(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();

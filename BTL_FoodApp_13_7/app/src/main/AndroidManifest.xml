@@ -18,6 +18,20 @@
 
         >
         <activity
+            android:name=".Project.Activity.DaLuuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Project.Activity.TrungTamHoTroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Project.Activity.ChinhSachActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Project.Activity.VeChungToiActivity"
+            android:exported="false" />
+
+
+        <activity
             android:name=".Project.Activity.DangBaiActivity"
             android:exported="false" />
         <activity

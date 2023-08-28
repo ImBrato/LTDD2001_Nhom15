@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.btl_foodapp_2_7.Project.Adapter.FoodListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.SlideAdapter;
@@ -82,6 +83,7 @@ public class DaLuuActivity extends AppCompatActivity {
         recyclerViewFood.setLayoutManager(linearLayoutManager);
         if (preferences.contains("username")) {
             String username = preferences.getString("username", "");
+
             int id = db2.getIduserByName(username);
             adapterFoodList= new FoodListAdapter(db2.getLikedFoodsByUserId(id));
             recyclerViewFood.setAdapter(adapterFoodList);
