@@ -111,10 +111,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addFood(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> food = new ArrayList<>();
-        ContentValues cv1 = createContentValuesFood("Gà ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "","1 tiếng", 100, 50, "17/8/2023", 1,  1);
-        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "","30 phút",100, 50, "18/7/20323", 1,1);
+        ContentValues cv1 = createContentValuesFood("Ga ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "","1 tiếng", 100, 50, "17/8/2023", 1,  1);
+        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "","30 phút",100, 50, "18/7/2023", 1,1);
+        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "","30 phút",100, 50, "18/9/20323", 1,2);
         food.add(cv1);
         food.add(cv2);
+        food.add(cv3);
         food.forEach(f ->{
            db.insert(TABLE_FOOD, null, f);
         });

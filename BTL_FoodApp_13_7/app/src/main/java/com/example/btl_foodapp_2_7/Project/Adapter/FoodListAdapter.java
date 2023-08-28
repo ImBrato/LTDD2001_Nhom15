@@ -9,9 +9,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
@@ -20,6 +20,7 @@ import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
+
 
 import java.util.ArrayList;
 
@@ -89,19 +90,20 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                     SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
                     String username = preferences.getString("username", "");
                     int id = db2.getIduserByName(username);
+
                     if (clickedPosition != RecyclerView.NO_POSITION) {
+                        Food clickedFood = items.get(clickedPosition);
+
+
                         if (btnLike.isChecked()) {
-                            Toast.makeText(context, String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
-                            db2.saveFood(id, 1);
+                            Toast.makeText(context, "Bạn đã lưu món ăn", Toast.LENGTH_SHORT).show();
+                            db2.saveFood(id, clickedFood.getId());
                             currentScore1++;
                         } else {
                             currentScore1--;
-                            db2.unsaveFood(id, 1);
+                            db2.unsaveFood(id, clickedFood.getIdBuaAn());
                         }
                         score1Txt.setText(String.valueOf(currentScore1));
-//                        boolean isChecked = btnLike.isChecked();
-//                        String message = isChecked ? "Đã thích mục " : "Bỏ thích mục ";
-//                        Toast.makeText(context, message + clickedPosition, Toast.LENGTH_SHORT).show();
                     }
                 }
             });

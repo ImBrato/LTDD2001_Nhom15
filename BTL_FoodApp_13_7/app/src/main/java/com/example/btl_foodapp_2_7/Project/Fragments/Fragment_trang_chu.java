@@ -2,14 +2,21 @@ package com.example.btl_foodapp_2_7.Project.Fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,8 +28,11 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.btl_foodapp_2_7.Project.Activity.LoginActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
+import com.example.btl_foodapp_2_7.Project.Activity.SiginActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.SlideItem;
+import com.example.btl_foodapp_2_7.Project.Activity.TimKiemActivity;
 import com.example.btl_foodapp_2_7.Project.Adapter.CategoryListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.FoodListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.SlideAdapter;
@@ -45,6 +55,8 @@ public class Fragment_trang_chu extends Fragment {
     CategoryListAdapter homeHorAdapter;
 //    MyDAO mydao;
     CheckBox checkFav;
+
+    List<Food> searchResults = new ArrayList<>();
 
     private Handler handler = new Handler();
 
@@ -115,8 +127,43 @@ public class Fragment_trang_chu extends Fragment {
                 handler.postDelayed(runnable, 2000);
             }
         });
+
+
+    ///Tìm Kiếm
+        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
+        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+               if(editTextSearch.getText().toString().isEmpty()){
+                   Toast.makeText(getContext(), "Nhập tên món ăn", Toast.LENGTH_SHORT).show();
+                   return false;
+               }
+                performSearch(editTextSearch.getText().toString());
+                return true;
+            }
+
+        });
         return view;
 
+
+    }
+    private void performSearch(String searchText) {
+        searchResults.clear(); // Xóa danh sách kết quả tìm kiếm trước đó
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+        List<Food> yourFoodList = db2.getAllFoods();
+        for (Food food : yourFoodList) {
+            if (food.getTenMonAn().toLowerCase().contains(searchText.toLowerCase())) {
+                searchResults.add(food);
+            }
+        }
+        if(searchResults.isEmpty()){
+            Toast.makeText(getContext(), "Không tìm thấy món ăn thêo yêu cầu", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(getContext(), TimKiemActivity.class);
+            intent.putExtra("searchResults", new ArrayList<>(searchResults)); // Gửi danh sách như một ArrayList
+            startActivity(intent);
+        }
 
     }
 
@@ -135,10 +182,6 @@ public class Fragment_trang_chu extends Fragment {
 
         adapterFoodList= new FoodListAdapter(db2.getAllFoods());
         recyclerViewFood.setAdapter(adapterFoodList);
-
-
-
-
 
     }
 
