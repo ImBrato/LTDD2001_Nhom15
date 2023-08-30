@@ -123,6 +123,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnTrungTamHoTro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gửi Yêu Cầu Hỗ Trợ"
