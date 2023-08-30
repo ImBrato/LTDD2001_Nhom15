@@ -1,5 +1,6 @@
 package com.example.btl_foodapp_2_7.Project.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -20,13 +21,16 @@ import com.example.btl_foodapp_2_7.Project.Activity.DaLuuActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
+import com.example.btl_foodapp_2_7.Project.Model.MonAn_DaLuu;
 import com.example.btl_foodapp_2_7.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
     ArrayList<Food> items;
     Context context;
+
 
     public FoodListAdapter(ArrayList<Food> items) {
         this.items = items;
@@ -41,6 +45,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
     }
 
     @Override
+
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTenMonAn());
         holder.nameTxt.setText(items.get(position).getTenTacGia());
@@ -49,10 +54,45 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         holder.score1Txt.setText("" + items.get(position).getLuotTim());
         int currentScore = holder.getCurrentScore1();
 
-        int drawableResourceID = holder.itemView.getResources().getIdentifier(items.get(position).getPicUrl(), "drawable", holder.itemView.getContext().getPackageName());
+//        int drawableResourceID = holder.itemView.getResources().getIdentifier(items.get(position).getPicUrl(), "drawable", holder.itemView.getContext().getPackageName());
+//
+//        Glide.with(holder.itemView.getContext()).load(drawableResourceID).transform(new GranularRoundedCorners(0,0,0,0)).into(holder.pic);
+        String imageUrl = items.get(position).getPicUrl(); // Đường dẫn URL của hình ảnh
 
-        Glide.with(holder.itemView.getContext()).load(drawableResourceID).transform(new GranularRoundedCorners(0,0,0,0)).into(holder.pic);
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .override(500,500 ) // Chỉnh kích thước ảnh ở đây
+                .into(holder.pic);
 
+        DatabaseHelper db2 = new DatabaseHelper(context);
+        SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        int id = db2.getIduserByName(username);
+        int clickedPosition = position+1;
+        boolean isSaved = db2.checkIfFoodIsSaved(id, clickedPosition);
+
+        holder.btnLike.setChecked(isSaved);
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+                String username = preferences.getString("username", "");
+                int id = db2.getIduserByName(username);
+                boolean isChecked = holder.btnLike.isChecked();
+                int clickedPosition = position+1;
+                if(isChecked){
+                    Toast.makeText(view.getContext(), String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
+                    db2.saveFood(id, clickedPosition);
+                }
+                else {
+                    Toast.makeText(view.getContext(), String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
+                    db2.unsaveFood(id, clickedPosition);
+
+
+
+                }
+            }
+        });
 
     }
 
@@ -80,37 +120,42 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             scoreTxt = itemView.findViewById(R.id.luotDanhGia);
             score1Txt = itemView.findViewById(R.id.luotTim);
             pic = itemView.findViewById(R.id.pic);
-            currentScore1 = Integer.parseInt(score1Txt.getText().toString());
             btnLike = itemView.findViewById(R.id.btn_like);
-            DatabaseHelper db2 = new DatabaseHelper(context);
-            SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-            String username = preferences.getString("username", "");
-            int id = db2.getIduserByName(username);
-            boolean isLiked = db2.checkIfFoodIsSaved(id, getAdapterPosition()+1);
 
-            btnLike.setChecked(isLiked);
-            btnLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DatabaseHelper db2 = new DatabaseHelper(context);
-                    int clickedPosition = getAdapterPosition();
-                    Log.i("like", String.valueOf(isLiked));
-                    if (clickedPosition != RecyclerView.NO_POSITION) {
-                        if (btnLike.isChecked()) {
-                            Toast.makeText(context, String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
-                            db2.saveFood(id, clickedPosition +1);
-                            currentScore1++;
-                        } else {
-                            currentScore1--;
-                            db2.unsaveFood(id, clickedPosition + 1);
-                        }
-                        score1Txt.setText(String.valueOf(currentScore1));
-//                        boolean isChecked = btnLike.isChecked();
-//                        String message = isChecked ? "Đã thích mục " : "Bỏ thích mục ";
-//                        Toast.makeText(context, message + clickedPosition, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            currentScore1 = Integer.parseInt(score1Txt.getText().toString());
+
+
+//
+//            btnLike.setChecked(isLiked);
+//
+//            btnLike.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int clickedPosition = getAdapterPosition();
+//                    boolean isChecked = btnLike.isChecked();
+//
+//                    if (clickedPosition != RecyclerView.NO_POSITION) {
+//                        // Thay đổi trạng thái checked của btnLike
+//                        btnLike.setChecked(!isChecked);
+//
+//                        // Cập nhật biến isLiked
+//                        isLiked = !isChecked;
+//
+//                        if (isChecked) {
+//                            // Đánh dấu món ăn là đã lưu và cập nhật UI
+//                            currentScore1--;
+//                            db2.unsaveFood(id, clickedPosition + 1);
+//                        } else {
+//                            // Đánh dấu món ăn là chưa lưu và cập nhật UI
+//                            currentScore1++;
+//                            db2.saveFood(id, clickedPosition + 1);
+//                        }
+//
+//                        // Cập nhật số lượng lượt tim vào UI
+//                        score1Txt.setText(String.valueOf(currentScore1));
+//                    }
+//                }
+//            });
         }
     }
 }

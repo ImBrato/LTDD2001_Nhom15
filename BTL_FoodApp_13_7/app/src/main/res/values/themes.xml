@@ -7,13 +7,10 @@
         <item name="colorOnPrimary">@color/white</item>
 
 
-
         <item name="android:windowActivityTransitions">true</item>
 
 
-
     </style>
-
 
 
     <style name="Theme.BTL_FoodApp_2_7" parent="Base.Theme.BTL_FoodApp_2_7" />

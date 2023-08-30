@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         db.addFood();
         db.addUser();
         db.addBuaAn();
-        db.saveFood(1,2);
+
 
 //        code botom
         trangchuLayout = findViewById(R.id.trangchuLayout);

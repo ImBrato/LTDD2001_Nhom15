@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -56,8 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         btnDangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DatabaseHelper db2 = new DatabaseHelper(LoginActivity.this);
                 String usernameTxt = username.getText().toString();
                 String passwordTxt = password.getText().toString();
+                String userRole = db2.getUserRoleByUsername(usernameTxt);
                 String[] projection = {"id"};
                 String selection = "username = ? AND password = ?";
                 String[] selectionArgs = {usernameTxt, passwordTxt};
@@ -69,15 +72,20 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 else{
-//                    Toast.makeText(LoginActivity.this, "Login thanh cong", Toast.LENGTH_SHORT).show();
+                    if (userRole != null) {
+                        if (userRole.equals("ADMIN")) {
+                            startActivity(new Intent(LoginActivity.this, Admin_controller.class));
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+                    }
                     SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("username", usernameTxt);
                     editor.putString("password", passwordTxt);
                     Toast.makeText(LoginActivity.this, passwordTxt, Toast.LENGTH_SHORT).show();
-
                     editor.apply();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
 
                 }
 
