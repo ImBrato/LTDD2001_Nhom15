@@ -2,6 +2,7 @@ package com.example.btl_foodapp_2_7.Project.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
@@ -20,7 +21,6 @@ import com.example.btl_foodapp_2_7.Project.Activity.MainActivity;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
-
 
 import java.util.ArrayList;
 
@@ -82,28 +82,32 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             pic = itemView.findViewById(R.id.pic);
             currentScore1 = Integer.parseInt(score1Txt.getText().toString());
             btnLike = itemView.findViewById(R.id.btn_like);
+            DatabaseHelper db2 = new DatabaseHelper(context);
+            SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+            String username = preferences.getString("username", "");
+            int id = db2.getIduserByName(username);
+            boolean isLiked = db2.checkIfFoodIsSaved(id, getAdapterPosition()+1);
+
+            btnLike.setChecked(isLiked);
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DatabaseHelper db2 = new DatabaseHelper(context);
                     int clickedPosition = getAdapterPosition();
-                    SharedPreferences preferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-                    String username = preferences.getString("username", "");
-                    int id = db2.getIduserByName(username);
-
+                    Log.i("like", String.valueOf(isLiked));
                     if (clickedPosition != RecyclerView.NO_POSITION) {
-                        Food clickedFood = items.get(clickedPosition);
-
-
                         if (btnLike.isChecked()) {
-                            Toast.makeText(context, "Bạn đã lưu món ăn", Toast.LENGTH_SHORT).show();
-                            db2.saveFood(id, clickedFood.getId());
+                            Toast.makeText(context, String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
+                            db2.saveFood(id, clickedPosition +1);
                             currentScore1++;
                         } else {
                             currentScore1--;
-                            db2.unsaveFood(id, clickedFood.getIdBuaAn());
+                            db2.unsaveFood(id, clickedPosition + 1);
                         }
                         score1Txt.setText(String.valueOf(currentScore1));
+//                        boolean isChecked = btnLike.isChecked();
+//                        String message = isChecked ? "Đã thích mục " : "Bỏ thích mục ";
+//                        Toast.makeText(context, message + clickedPosition, Toast.LENGTH_SHORT).show();
                     }
                 }
             });

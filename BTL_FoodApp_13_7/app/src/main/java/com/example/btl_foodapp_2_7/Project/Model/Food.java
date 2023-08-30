@@ -5,8 +5,7 @@ import java.io.Serializable;
 public class Food implements Serializable {
 
 
-    private static int nextId = 1;
-    private int id;
+    private static int id;
     private String tenTacGia;
     private String tenMonAn;
     private String description;
@@ -35,7 +34,7 @@ public class Food implements Serializable {
     }
 
     public Food(String tenMonAn, String description, String nguyenLieu, String cachLam, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
-        this.id = nextId++;
+        this.id = id;
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
@@ -64,7 +63,6 @@ public class Food implements Serializable {
 
 
     }
-    public int getId() { return id; }
     public int getLuotTim() {
         return luotTim;
     }

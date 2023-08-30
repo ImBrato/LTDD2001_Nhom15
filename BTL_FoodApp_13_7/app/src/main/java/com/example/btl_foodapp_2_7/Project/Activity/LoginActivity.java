@@ -69,12 +69,12 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 else{
-                    Toast.makeText(LoginActivity.this, "Login thanh cong", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "Login thanh cong", Toast.LENGTH_SHORT).show();
                     SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
-
                     SharedPreferences.Editor editor = preferences.edit();
-
                     editor.putString("username", usernameTxt);
+                    editor.putString("password", passwordTxt);
+                    Toast.makeText(LoginActivity.this, passwordTxt, Toast.LENGTH_SHORT).show();
 
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
