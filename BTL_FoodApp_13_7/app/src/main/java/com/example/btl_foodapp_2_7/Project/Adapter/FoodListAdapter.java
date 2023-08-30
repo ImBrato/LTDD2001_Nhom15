@@ -110,3 +110,4 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         }
     }
 }
+
