@@ -43,6 +43,9 @@
             android:name=".Project.Activity.DangBaiActivity"
             android:exported="false" />
         <activity
+            android:name=".Project.Activity.ItemsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Project.Activity.UploadActivity"
             android:exported="false" />
         <activity
@@ -57,13 +60,29 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".Project.Activity.AdminActivity"
+            android:exported="true">
+
+
+
+        </activity>
+
+        <activity
             android:name=".Project.Activity.DetailActivity"
-            android:exported="false" />
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+
+
+
         <activity
             android:name=".Project.Activity.IntroActivity"
             android:exported="false" />
