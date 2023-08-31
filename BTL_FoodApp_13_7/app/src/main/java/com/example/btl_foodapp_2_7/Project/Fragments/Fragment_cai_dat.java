@@ -26,6 +26,7 @@ import com.example.btl_foodapp_2_7.Project.Activity.TrungTamHoTroActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.VeChungToiActivity;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.zip.Inflater;
 
@@ -139,6 +140,7 @@ public class Fragment_cai_dat extends Fragment {
         txtLogout = view.findViewById(R.id.txtSettingLogout);
         txtLogout.setOnClickListener(v -> {
             SharedPreferences.Editor editor = preferences.edit();
+            FirebaseAuth.getInstance().signOut();
             editor.clear();
             editor.apply();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
