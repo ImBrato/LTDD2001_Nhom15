@@ -64,8 +64,6 @@ public class Fragment_trang_chu extends Fragment {
             }
         });
 
-
-
         view1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

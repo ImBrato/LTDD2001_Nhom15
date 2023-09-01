@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     LottieAnimationView lottieAnimationView;
 
 
-    private static final int RC_SIGN_IN = 123;
+        private static final int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -139,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
     private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        Toast.makeText(LoginActivity.this, "da click", Toast.LENGTH_SHORT).show();
     }
 
     @Override

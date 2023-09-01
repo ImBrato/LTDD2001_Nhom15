@@ -26,7 +26,7 @@ public class Food implements Serializable {
     private int userId;
 
     {
-        id++;
+        setId(getId() + 1);
     }
 
     public Food (){
@@ -34,7 +34,7 @@ public class Food implements Serializable {
     }
 
     public Food(String tenMonAn, String description, String nguyenLieu, String cachLam, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
-        this.id = id;
+        this.setId(getId());
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
@@ -50,7 +50,7 @@ public class Food implements Serializable {
 
     }
     public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang,  String userName) {
-        this.id = id;
+        this.setId(getId());
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
@@ -63,6 +63,15 @@ public class Food implements Serializable {
 
 
     }
+
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        Food.id = id;
+    }
+
     public int getLuotTim() {
         return luotTim;
     }

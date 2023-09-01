@@ -13,14 +13,27 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.btl_foodapp_2_7.Project.API.APIRequestHelper;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_cai_dat;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_dang_bai;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_trang_chu;
 import com.example.btl_foodapp_2_7.Project.Fragments.Fragment_yeu_thich;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
+import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.Project.Model.FoodDataSource;
 import com.example.btl_foodapp_2_7.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -46,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView caidatTxt1;
     private TextView caidatTxt;
 
+    protected APIRequestHelper apiRequestHelper;
 
-
+    protected DatabaseHelper db;
+    String url;
 
 
     @Override
@@ -63,11 +78,55 @@ public class MainActivity extends AppCompatActivity {
             db.addBuaAn();
             prefs.edit().putBoolean("firstRun", false).commit();
         }
-        DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-        db.recreateDatabase();
-        db.addFood();
-        db.addUser();
-        db.addBuaAn();
+        db = new DatabaseHelper(MainActivity.this);
+//        db.recreateDatabase();
+//        db.addFood();
+//        db.addUser();
+//        db.addBuaAn();
+        url = "https://64f161580e1e60602d23bce1.mockapi.io/api/food";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                Food food = new Food();
+                                food.setId(jsonObject.getInt("id"));
+                                food.setTenMonAn(jsonObject.getString("food_name"));
+                                food.setDescription(jsonObject.getString("description"));
+                                food.setNguyenLieu(jsonObject.getString("nguyen_lieu"));
+                                food.setCachLam(jsonObject.getString("cach_lam"));
+                                food.setPicUrl(jsonObject.getString("picUrl"));
+                                food.setTime(jsonObject.getString("time"));
+                                food.setIdBuaAn(jsonObject.getInt( "buaAnId"));
+
+                                food.setUserId(jsonObject.getInt("user_id"));
+
+                                // Lưu food vào CSDL
+                                db.insertFood(food);
+                                Log.i("food", String.valueOf(food));
+                                Toast.makeText(MainActivity.this, "dc r nhe ", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(MainActivity.this, "Lỗi xử lý dữ liệu JSON", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Lỗi khi fetch API", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        Volley.newRequestQueue(this).add(request);
+
+        //        fetchAndInsertFoodData();
+
+
 
 
 //        code botom
@@ -245,6 +304,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+    private void fetchAndInsertFoodData() {
     }
 
 
