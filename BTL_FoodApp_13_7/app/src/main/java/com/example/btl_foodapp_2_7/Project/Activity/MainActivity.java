@@ -79,10 +79,12 @@ public class MainActivity extends AppCompatActivity {
             prefs.edit().putBoolean("firstRun", false).commit();
         }
         db = new DatabaseHelper(MainActivity.this);
-//        db.recreateDatabase();
-//        db.addFood();
-//        db.addUser();
-//        db.addBuaAn();
+        db.recreateDatabase();
+        db.addFood();
+        db.addUser();
+        db.addBuaAn();
+        db.saveComment("day la comment1", 1,1);
+
         url = "https://64f161580e1e60602d23bce1.mockapi.io/api/food";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

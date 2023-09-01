@@ -52,6 +52,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_SAVED_FOOD_ID = "id";
     protected static final String COLUMN_FOOD_ID_FK = "id_food";
 
+
+    private static final String TABLE_COMMENT = "comment";
+
+    // Các cột trong bảng "comment"
+    private static final String COLUMN_ID_COMMENT = "id";
+    private static final String COLUMN_NOI_DUNG = "noi_dung";
+    private static final String COLUMN_ID_FOOD_FK_COMMENT = "id_food";
+    private static final String COLUMN_ID_USER_FK_COMMENT = "id_user";
+
+
+
     // Câu truy vấn tạo bảng BUAN
     private static final String CREATE_TABLE_BUA_AN = "CREATE TABLE " + TABLE_BUA_AN + " (" +
             COLUMN_BUA_AN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -87,6 +98,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_USER_ID_FK + " integer references " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
             COLUMN_FOOD_ID_FK + " integer references " + TABLE_FOOD + "(" + COLUMN_FOOD_ID + ")); ";
 
+
+    private static final String CREATE_TABLE_COMMENT = "CREATE TABLE " + TABLE_COMMENT + " (" +
+            COLUMN_ID_COMMENT + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_NOI_DUNG + " TEXT NOT NULL, " +
+            COLUMN_ID_FOOD_FK_COMMENT + " INTEGER, " +
+            COLUMN_ID_USER_FK_COMMENT + " INTEGER, " +
+            "FOREIGN KEY (" + COLUMN_ID_FOOD_FK_COMMENT + ") REFERENCES food(id), " +
+            "FOREIGN KEY (" + COLUMN_ID_USER_FK_COMMENT + ") REFERENCES user(id));";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -97,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_TABLE_USER);
         database.execSQL(CREATE_TABLE_BUA_AN);
         database.execSQL(CREATE_TABLE_SAVED_FOOD);
-
+        database.execSQL(CREATE_TABLE_COMMENT);
     }
 
     @Override
@@ -106,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUA_AN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_FOOD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENT);
         onCreate(db);
     }
 
@@ -274,6 +295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUA_AN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_FOOD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENT);
 
 
         // Tạo lại các bảng
@@ -281,6 +303,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_BUA_AN);
         db.execSQL(CREATE_TABLE_SAVED_FOOD);
+        db.execSQL(CREATE_TABLE_COMMENT);
 
 
         db.close();
@@ -300,6 +323,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         db.insert(TABLE_SAVED_FOOD, null, values);
+        db.close();
+    }
+
+    public void saveComment(String noiDung, int userId, int foodId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOI_DUNG,  noiDung);
+        values.put(COLUMN_ID_FOOD_FK_COMMENT,  foodId);
+        values.put(COLUMN_ID_USER_FK_COMMENT, userId);
+        db.insert(TABLE_COMMENT, null, values);
         db.close();
     }
 
