@@ -6,14 +6,16 @@ public class CardItems {
     private String moTa;
     private int luotDanhGia;
     private int luotTim;
+    private String image;
 
-    public CardItems(String tenMon, String ten_User, String moTa, int luotDanhGia, int luotTim) {
+    public CardItems(String tenMon, String ten_User, String moTa, int luotDanhGia, int luotTim, String image) {
         this.tenMon = tenMon;
         this.ten_User = ten_User;
         this.moTa = moTa;
         this.luotDanhGia = luotDanhGia;
         this.luotDanhGia = luotDanhGia;
         this.luotTim = luotTim;
+        this.image = image;
     }
 
     public String getTenMon() {
@@ -22,6 +24,13 @@ public class CardItems {
 
     public void setTenMon(String tenMon) {
         this.tenMon = tenMon;
+    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTen_User() {

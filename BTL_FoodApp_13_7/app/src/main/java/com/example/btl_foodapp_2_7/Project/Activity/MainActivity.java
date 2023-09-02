@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             db.addFood();
             db.addUser();
             db.addBuaAn();
+            db.addComment();
             prefs.edit().putBoolean("firstRun", false).commit();
         }
         db = new DatabaseHelper(MainActivity.this);
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         db.addFood();
         db.addUser();
         db.addBuaAn();
+        db.addComment();
         db.saveComment("day la comment1", 1,1);
 
         url = "https://64f161580e1e60602d23bce1.mockapi.io/api/food";
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Lưu food vào CSDL
                                 db.insertFood(food);
                                 Log.i("food", String.valueOf(food));
-                                Toast.makeText(MainActivity.this, "dc r nhe ", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainActivity.this, "dc r nhe ", Toast.LENGTH_SHORT).show();
 
 
                             }

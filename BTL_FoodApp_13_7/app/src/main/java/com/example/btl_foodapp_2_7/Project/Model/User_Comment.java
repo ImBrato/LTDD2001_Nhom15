@@ -2,6 +2,7 @@ package com.example.btl_foodapp_2_7.Project.Model;
 
 public class User_Comment {
     private int id;
+    private static  int idTest;
     private String noiDung;
     private int idUser;
     private int idFood;
@@ -9,7 +10,11 @@ public class User_Comment {
     public User_Comment(){
 
     }
+    {
+        idTest++;
+    }
     public User_Comment(String noiDung, int idUser, int idFood){
+        this.setId(idTest);
         this.setNoiDung(noiDung);
         this.setIdUser(idUser);
         this.setIdFood(idFood);

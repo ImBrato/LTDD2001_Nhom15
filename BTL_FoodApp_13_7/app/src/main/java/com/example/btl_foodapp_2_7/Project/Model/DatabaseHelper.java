@@ -47,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String TABLE_BUA_AN = "Bua_An";
     protected static final String COLUMN_BUA_AN_ID = "id";
     protected static final String COLUMN_TEN_BUA_AN = "tenBuaAn";
+    protected static final String COLUMN_IMAGE_BUA_AN = "anhBuaAn";
 
     protected static final String TABLE_SAVED_FOOD = "MonAn_DaLuu";
     protected static final String COLUMN_SAVED_FOOD_ID = "id";
@@ -66,7 +67,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Câu truy vấn tạo bảng BUAN
     private static final String CREATE_TABLE_BUA_AN = "CREATE TABLE " + TABLE_BUA_AN + " (" +
             COLUMN_BUA_AN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_TEN_BUA_AN + " TEXT NOT NULL);";
+            COLUMN_TEN_BUA_AN + " TEXT NOT NULL,"+
+            COLUMN_IMAGE_BUA_AN + " TEXT NOT NULL);" ;
 
     // Câu truy vấn tạo bảng FOOD
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE " + TABLE_FOOD + "(" +
@@ -131,12 +133,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    @SuppressLint("Range")
+    public Food getFoodById(int foodId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Food food = null;
+
+        String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_FOOD_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(foodId)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            food = new Food();
+            food.setTenMonAn(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FOOD)));
+            food.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+            food.setPicUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PIC_URL)));
+            food.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+            food.setLuotDanhGia(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_DANH_GIA)));
+            food.setLuotTim(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_TIM)));
+            food.setNgayDang(cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_DANG)));
+            // Lấy tên tác giả
+            String userId = cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID_FK));
+            String tenTacGia = getUserNameById(Integer.parseInt(userId));
+            food.setTenTacGia(tenTacGia);
+        }
+        cursor.close();
+        db.close();
+
+        return food;
+    }
     public void addFood(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> food = new ArrayList<>();
         ContentValues cv1 = createContentValuesFood("Ga ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg","1 tiếng", 100, 50, "17/8/2023", 1,  1);
-        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "https://cdn.tgdd.vn/Files/2021/07/28/1371483/bi-quyet-lam-mon-vit-nuong-van-dinh-thom-ngon-nuc-mui-ca-nha-deu-me-202201030905519106.jpg","30 phút",100, 50, "18/7/2023", 1,1);
-        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "https://cdn.tgdd.vn/Files/2021/07/28/1371483/bi-quyet-lam-mon-vit-nuong-van-dinh-thom-ngon-nuc-mui-ca-nha-deu-me-202201030905519106.jpg","30 phút",100, 50, "18/7/2023", 1,2);
+        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,3);
         food.add(cv1);
         food.add(cv2);
         food.add(cv3);
@@ -149,12 +178,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<ContentValues> user = new ArrayList<>();
         ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1", "ADMIN");
         ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "USER");
+        ContentValues cv3 = createContentValuesUser("Hoàng Ân ", "user", "1", "USER");
         user.add(cv1);
         user.add(cv2);
+        user.add(cv3);
         user.forEach(f ->{
             db.insert(TABLE_USER, null, f);
         });
     }
+
     public long insertFood(Food food) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -175,16 +207,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addBuaAn(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> buaAn = new ArrayList<>();
-        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng");
-        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa");
-        ContentValues cv3 = createContentValuesBuaAn("Bữa tối");
+        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv3 = createContentValuesBuaAn("Bữa tối", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv4 = createContentValuesBuaAn("Bữa Phụ", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv5 = createContentValuesBuaAn("Ăn Vặt", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+
+
+        buaAn.add(cv1);
+        buaAn.add(cv2);
+        buaAn.add(cv3);
+        buaAn.add(cv4);
+        buaAn.add(cv5);
+        buaAn.forEach(f ->{
+            db.insert(TABLE_BUA_AN, null, f);
+        });
+    }
+    public void addComment(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<ContentValues> buaAn = new ArrayList<>();
+        ContentValues cv1 = createContentValuesComment("Ngon quá đi", 1, 1);
+        ContentValues cv2 = createContentValuesComment("Ngon thật á", 1, 1);
+        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 1, 1);
 
         buaAn.add(cv1);
         buaAn.add(cv2);
         buaAn.add(cv3);
         buaAn.forEach(f ->{
-            db.insert(TABLE_BUA_AN, null, f);
+            db.insert(TABLE_COMMENT, null, f);
         });
+    }
+
+
+    @SuppressLint("Range")
+    public ArrayList<BuaAn> getAllBuaAn() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<BuaAn> buaAnList = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_BUA_AN;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BuaAn buaAn = new BuaAn();
+                buaAn.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_BUA_AN_ID)));
+                buaAn.setTenBuaAn(cursor.getString(cursor.getColumnIndex(COLUMN_TEN_BUA_AN)));
+                buaAn.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_BUA_AN)));
+                buaAnList.add(buaAn);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return buaAnList;
     }
     @SuppressLint("Range")
     public ArrayList<Food> getAllFoods() {
@@ -218,6 +293,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    @SuppressLint("Range")
+    public ArrayList<Food> getFoodsByBuaAnId(int buaAnId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Food> foodList = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_BUA_AN_ID_FK + " = ?";
+        String[] selectionArgs = {String.valueOf(buaAnId)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Food food = new Food();
+                food.setTenMonAn(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FOOD)));
+                food.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+                food.setPicUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PIC_URL)));
+                food.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                food.setLuotDanhGia(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_DANH_GIA)));
+                food.setLuotTim(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_TIM)));
+                food.setNgayDang(cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_DANG)));
+
+                foodList.add(food);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return foodList;
+    }
 
     @SuppressLint("Range")
     public String getUserNameById(int userId) {
@@ -265,6 +369,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cv;
     }
+    private ContentValues createContentValuesComment(String noiDung, int idUser, int idFood){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NOI_DUNG, noiDung);
+        cv.put(COLUMN_ID_USER_FK_COMMENT, idUser);
+        cv.put(COLUMN_ID_FOOD_FK_COMMENT, idFood);
+
+        return cv;
+    }
     private ContentValues createContentValuesUser(String name, String userName, String password, String userRole){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
@@ -273,9 +385,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USER_ROLE, userRole);
         return cv;
     }
-    private ContentValues createContentValuesBuaAn(String ten){
+    private ContentValues createContentValuesBuaAn(String ten, String image){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TEN_BUA_AN, ten);
+        cv.put(COLUMN_IMAGE_BUA_AN, image);
         return cv;
     }
 
@@ -334,6 +447,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ID_USER_FK_COMMENT, userId);
         db.insert(TABLE_COMMENT, null, values);
         db.close();
+    }
+
+    @SuppressLint("Range")
+    public ArrayList<User_Comment> getCommentsByFoodId(int foodId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<User_Comment> comments = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_COMMENT + " WHERE " + COLUMN_ID_FOOD_FK_COMMENT + " = ?";
+        String[] selectionArgs = {String.valueOf(foodId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                User_Comment comment = new User_Comment();
+                comment.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_COMMENT)));
+                comment.setNoiDung(cursor.getString(cursor.getColumnIndex(COLUMN_NOI_DUNG)));
+                comment.setIdFood(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_FOOD_FK_COMMENT)));
+                comment.setIdUser(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_USER_FK_COMMENT)));
+
+                comments.add(comment);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return comments;
     }
 
     public void unsaveFood(int userId, int foodId) {

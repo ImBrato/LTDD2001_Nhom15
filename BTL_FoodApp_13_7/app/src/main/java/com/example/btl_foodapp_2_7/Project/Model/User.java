@@ -2,13 +2,22 @@ package com.example.btl_foodapp_2_7.Project.Model;
 
 public class User {
     private int id;
+    private static  int idTest;
     private String name;
     private String username;
     private String password;
     private String userRole;
 
 
+    public User(){
+
+    }
+    {
+        idTest ++;
+    }
+
     public User(String name, String username, String password, String userRole){
+        this.setId(idTest);
         this.name = name;
         this.username = username;
         this.password = password;

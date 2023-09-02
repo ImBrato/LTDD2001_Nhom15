@@ -1,30 +1,32 @@
 package com.example.btl_foodapp_2_7.Project.Model;
 
 public class MonAn_DaLuu {
-    private static int id;
+    private static int idTest;
+    private int id;
     private int idMonAn;
     private int idUser;
 
     {
-        id++;
+        idTest++;
     }
 
     public MonAn_DaLuu(){
 
     }
     public MonAn_DaLuu(int idB, int idU){
+        this.setId(idTest);
         this.setIdMonAn(idB);
         this.setIdUser(idU);
 
 
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        MonAn_DaLuu.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdMonAn() {

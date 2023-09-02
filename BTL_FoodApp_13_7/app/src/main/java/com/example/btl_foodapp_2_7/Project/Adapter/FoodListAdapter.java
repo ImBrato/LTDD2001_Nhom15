@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
-    ArrayList<Food> items;
+    List<Food> items;
     Context context;
 
 
-    public FoodListAdapter(ArrayList<Food> items) {
+    public FoodListAdapter(List<Food> items) {
         this.items = items;
     }
 
@@ -48,20 +48,23 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
 
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.titleTxt.setText(items.get(position).getTenMonAn());
         holder.nameTxt.setText(items.get(position).getTenTacGia());
         holder.timeTxt.setText(items.get(position).getTime());
         holder.scoreTxt.setText("" + items.get(position).getLuotDanhGia());
         holder.score1Txt.setText("" + items.get(position).getLuotTim());
         int currentScore = holder.getCurrentScore1();
-        Food category = items.get(position);
+//        Food category = items.get(position);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int idFood = items.get(position).getId();
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                intent.putExtra("itemName", category.getUserId());
+                intent.putExtra("idBuaAn", idFood);
+                Toast.makeText(v.getContext(), String.valueOf(idFood), Toast.LENGTH_SHORT).show();
                 v.getContext().startActivity(intent);
             }
         });
@@ -98,9 +101,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 else {
                     Toast.makeText(view.getContext(), String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
                     db2.unsaveFood(id, clickedPosition);
-
-
-
                 }
             }
         });

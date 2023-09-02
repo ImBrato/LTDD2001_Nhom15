@@ -130,7 +130,7 @@ public class Fragment_cai_dat extends Fragment {
 
 //        String username = preferences.getString("username", "");
         if (preferences.contains("username")) {
-            String username = preferences.getString("username", "");;
+            String username = preferences.getString("username", "");
             txtLogout = view.findViewById(R.id.textView11);
             txtLogout.setText(username.toString());
             Toast.makeText(getContext(), "Login đã đăng nhập với tên đăng nhập: " + username, Toast.LENGTH_SHORT).show();
