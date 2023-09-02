@@ -2,26 +2,18 @@ package com.example.btl_foodapp_2_7.Project.Model;
 
 public class User {
     private int id;
-    private static  int idTest;
     private String name;
     private String username;
     private String password;
     private String userRole;
+    private String email;
 
-
-    public User(){
-
-    }
-    {
-        idTest ++;
-    }
-
-    public User(String name, String username, String password, String userRole){
-        this.setId(idTest);
+    public User(String name, String username, String password, String email, String userRole){
         this.name = name;
         this.username = username;
         this.password = password;
         this.userRole = userRole;
+        this.setEmail(email);
     }
     public int getId() {
         return id;
@@ -61,5 +53,13 @@ public class User {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

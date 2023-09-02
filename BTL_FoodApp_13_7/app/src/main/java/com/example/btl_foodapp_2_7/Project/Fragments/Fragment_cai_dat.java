@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.btl_foodapp_2_7.Project.Activity.Activity_Profile;
 import com.example.btl_foodapp_2_7.Project.Activity.ChinhSachActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.DaLuuActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.DangBaiActivity;
@@ -46,6 +48,7 @@ public class Fragment_cai_dat extends Fragment {
     private String mParam1;
     private String mParam2;
     TextView txtUserName, txtLogout;
+    LinearLayout profile_setting;
 
     public Fragment_cai_dat() {
         // Required empty public constructor
@@ -88,6 +91,17 @@ public class Fragment_cai_dat extends Fragment {
         ImageView trungTamHoTroButton = view.findViewById(R.id.TrungTamHoTro);
         ImageView daLuuButton = view.findViewById(R.id.imageViewDaLuu);
         ImageView chinhSachButton = view.findViewById(R.id.ChinhSachNguoiDung);
+
+        profile_setting = view.findViewById(R.id.profile_setting);
+
+        profile_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_Profile.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         daLuuButton.setOnClickListener(new View.OnClickListener() {

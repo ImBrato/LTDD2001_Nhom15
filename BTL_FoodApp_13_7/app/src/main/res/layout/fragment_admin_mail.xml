@@ -27,13 +27,13 @@
             android:textColor="#4E4E4E"
             android:textSize="26sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/noiDungTB"
+            app:layout_constraintBottom_toTopOf="@+id/edit_noiDungTB"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/noiDungTB"
+            android:id="@+id/edit_noiDungTB"
             android:layout_width="310dp"
             android:layout_height="60dp"
             android:layout_marginBottom="50dp"

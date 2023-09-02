@@ -52,6 +52,9 @@
             android:name=".Project.Activity.SiginActivity"
             android:exported="false" />
         <activity
+            android:name=".Project.Activity.Activity_Profile"
+            android:exported="true" />
+        <activity
             android:name=".Project.Activity.LoginActivity"
             android:exported="true" />
         <activity
