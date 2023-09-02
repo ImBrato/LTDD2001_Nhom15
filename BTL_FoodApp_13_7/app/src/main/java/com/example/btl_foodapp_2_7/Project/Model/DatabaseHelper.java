@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_NAME = "name";
     protected static final String COLUMN_USERNAME = "username";
     protected static final String COLUMN_PASSWORD = "password";
+    protected static final String COLUMN_EMAIL = "email";
     protected static final String COLUMN_USER_ROLE = "user_role";
 
     protected static final String COLUMN_USER_ID_FK = "user_id"; // Tên cột khóa ngoại trong bảng "food"
@@ -60,6 +59,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NOI_DUNG = "noi_dung";
     private static final String COLUMN_ID_FOOD_FK_COMMENT = "id_food";
     private static final String COLUMN_ID_USER_FK_COMMENT = "id_user";
+
+
+    private static final String TABLE_THONG_BAO = "thong_bao";
+
+    // Các cột trong bảng "thong_bao"
+    private static final String COLUMN_ID_THONG_BAO = "id";
+    private static final String COLUMN_NOI_DUNG_THONG_BAO = "noi_dung_thong_bao";
+    private static final String COLUMN_THOI_GIAN_THONG_BAO = "thoi_gian";
+
+    private static final String COLUMN_ID_USER_FK_THONG_BAO = "id_user";
 
 
 
@@ -91,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_NAME + " text not null, " +
             COLUMN_USERNAME + " text not null, " +
             COLUMN_PASSWORD + " text not null, " +
+            COLUMN_EMAIL + " text, " +
             COLUMN_USER_ROLE + " text not null);";
 
     private static final String CREATE_TABLE_SAVED_FOOD = "create table " + TABLE_SAVED_FOOD + "(" +
@@ -107,6 +117,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "FOREIGN KEY (" + COLUMN_ID_FOOD_FK_COMMENT + ") REFERENCES food(id), " +
             "FOREIGN KEY (" + COLUMN_ID_USER_FK_COMMENT + ") REFERENCES user(id));";
 
+
+    private static final String CREATE_TABLE_THONG_BAO = "CREATE TABLE " + TABLE_THONG_BAO + " (" +
+            COLUMN_ID_THONG_BAO + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_NOI_DUNG_THONG_BAO + " TEXT NOT NULL, " +
+            COLUMN_THOI_GIAN_THONG_BAO + " TEXT, " +
+            COLUMN_ID_USER_FK_THONG_BAO + " INTEGER, " +
+            "FOREIGN KEY (" + COLUMN_ID_USER_FK_THONG_BAO + ") REFERENCES user(id));";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -118,6 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_TABLE_BUA_AN);
         database.execSQL(CREATE_TABLE_SAVED_FOOD);
         database.execSQL(CREATE_TABLE_COMMENT);
+        database.execSQL(CREATE_TABLE_THONG_BAO);
     }
 
     @Override
@@ -127,6 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUA_AN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_FOOD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_THONG_BAO);
         onCreate(db);
     }
 
@@ -144,11 +164,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
            db.insert(TABLE_FOOD, null, f);
         });
     }
+
+    @SuppressLint("Range")
+    public User getUserById(int userId) {
+        User user = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Tạo câu truy vấn SQL
+        String query = "SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_USER_ID + " = ?";
+
+        // Thực hiện truy vấn
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        // Kiểm tra xem dữ liệu có tồn tại không
+        if (cursor.moveToFirst()) {
+
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            String userName = cursor.getString(cursor.getColumnIndex(COLUMN_USERNAME));
+            String email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+            String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+            String role = cursor.getString(cursor.getColumnIndex(COLUMN_USER_ROLE));
+            // Tạo đối tượng User từ dữ liệu CSDL
+            user = new User(name,userName, email, password, role);
+        }
+
+        // Đóng kết nối CSDL và trả về người dùng (hoặc null nếu không tìm thấy)
+        cursor.close();
+        db.close();
+        return user;
+    }
     public void addUser(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> user = new ArrayList<>();
-        ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1", "ADMIN");
-        ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "USER");
+        ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1","hoangbrato@gmail.com", "ADMIN");
+        ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "minhhoang2401@gmail.com", "USER");
         user.add(cv1);
         user.add(cv2);
         user.forEach(f ->{
@@ -265,11 +314,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cv;
     }
-    private ContentValues createContentValuesUser(String name, String userName, String password, String userRole){
+    private ContentValues createContentValuesUser(String name, String userName, String password, String email, String userRole){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_USERNAME, userName);
         cv.put(COLUMN_PASSWORD, password);
+        cv.put(COLUMN_EMAIL, email);
         cv.put(COLUMN_USER_ROLE, userRole);
         return cv;
     }
@@ -296,6 +346,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUA_AN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_FOOD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_THONG_BAO);
 
 
         // Tạo lại các bảng
@@ -304,6 +355,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_BUA_AN);
         db.execSQL(CREATE_TABLE_SAVED_FOOD);
         db.execSQL(CREATE_TABLE_COMMENT);
+        db.execSQL(CREATE_TABLE_THONG_BAO);
 
 
         db.close();
@@ -325,6 +377,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_SAVED_FOOD, null, values);
         db.close();
     }
+    @SuppressLint("Range")
+    public List<Notification> getAllThongBao() {
+        List<Notification> notificationList = new ArrayList<>();
+
+        // Viết truy vấn SQL để lấy thông báo từ bảng thong_bao
+        String selectQuery = "SELECT * FROM thong_bao";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Duyệt qua các dòng kết quả và thêm chúng vào danh sách thongBaos
+        if (cursor.moveToFirst()) {
+            do {
+//                Notification notification = new Notification();
+//                notification.setId(cursor.getInt(cursor.getColumnIndex("id")));
+//                notification.setNoiDung(cursor.getString(cursor.getColumnIndex("noi_dung_thong_bao")));
+//                // Điền thêm các trường thông báo khác nếu cần
+//
+//                thongBaos.add(thongBao);
+            } while (cursor.moveToNext());
+        }
+
+        // Đóng kết nối và trả về danh sách thông báo
+        db.close();
+        return notificationList;
+    }
+
 
     public void saveComment(String noiDung, int userId, int foodId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -361,7 +440,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return isSaved;
     }
 
+    public void saveThongBao(ThongBao thongBao){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOI_DUNG_THONG_BAO, thongBao.getNoiDung());
+        values.put(COLUMN_ID_USER_FK_THONG_BAO, thongBao.getId_admin());
 
+        db.insert(TABLE_THONG_BAO, null, values);
+
+        db.close();
+    }
     @SuppressLint("Range")
     public ArrayList<Food> getLikedFoodsByUserId(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -431,7 +519,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return userRole;
     }
 
+    public boolean updateUserInfo(int userId, String name, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        // Thêm thông tin mới vào ContentValues
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_PASSWORD, password);
+
+        // Xác định điều kiện cập nhật: ID của người dùng
+        String whereClause = COLUMN_USER_ID + " = ?";
+        String[] whereArgs = {String.valueOf(userId)};
+
+        // Thực hiện cập nhật và kiểm tra xem có thành công hay không
+        int numRowsUpdated = db.update(TABLE_USER, values, whereClause, whereArgs);
+
+        // Đóng kết nối CSDL
+        db.close();
+
+        // Trả về true nếu có ít nhất một hàng được cập nhật, ngược lại trả về false
+        return numRowsUpdated > 0;
+    }
+
+        
 
 
 }

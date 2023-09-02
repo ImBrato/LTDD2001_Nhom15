@@ -1,12 +1,21 @@
 package com.example.btl_foodapp_2_7.Project.Fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
+import com.example.btl_foodapp_2_7.Project.Model.ThongBao;
 import com.example.btl_foodapp_2_7.R;
 
 /**
@@ -24,6 +33,9 @@ public class fragment_admin_mail extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Button btnThongBao;
+    EditText edtNoiDungThongBao;
 
     public fragment_admin_mail() {
         // Required empty public constructor
@@ -56,10 +68,33 @@ public class fragment_admin_mail extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_admin_mail, container, false);
+        btnThongBao = view.findViewById(R.id.buttonThongBao); // Thay "buttonId" bằng ID thực tế của nút
+        edtNoiDungThongBao = view.findViewById(R.id.edit_noiDungTB);
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+        SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        int id = db2.getIduserByName(username);
+
+        // Gán sự kiện click cho nút Button
+        btnThongBao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThongBao thongbao = new ThongBao(edtNoiDungThongBao.getText().toString(), db2.getIduserByName(username));
+
+                db2.saveThongBao(thongbao);
+                Toast.makeText(getActivity(), "Nút đã được nhấn!" + edtNoiDungThongBao.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_mail, container, false);
+//        return inflater.inflate(R.layout.fragment_admin_mail, container, false);
     }
 }
