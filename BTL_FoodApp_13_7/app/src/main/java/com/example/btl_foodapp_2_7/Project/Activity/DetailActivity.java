@@ -115,7 +115,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-git
+
         adapterFoodList= new FoodListAdapter(items);
         recyclerViewFood.setAdapter(adapterFoodList);
 
