@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.btl_foodapp_2_7.Project.Model.Notification;
 import com.example.btl_foodapp_2_7.R;
 
@@ -18,27 +19,31 @@ import java.util.List;
 
 public class Notification_Items extends RecyclerView.Adapter<Notification_Items.ViewHolder> {
     private List<Notification> notifications;
-    private Context context;
 
-    public Notification_Items(List<Notification> notifications, Context context) {
+
+    public Notification_Items(List<Notification> notifications) {
         this.notifications = notifications;
-        this.context = context;
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_notification, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_notification, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Notification notification = notifications.get(position);
-
-        holder.avatarImageView.setImageResource(notification.getAvt_noti());
+        holder.avatarImageView.setImageResource(R.drawable.profile);
         holder.textView.setText(notification.getText_noti());
         holder.timeTextView.setText(notification.getTime_noti());
+        String imageUrl = notifications.get(position).getAvt_noti2(); // Đường dẫn URL của hình ảnh
+//        Glide.with(holder.itemView.getContext())
+//                .load(imageUrl)
+//                .override(500,500 ) // Chỉnh kích thước ảnh ở đây
+//                .into(holder.avatarImageView);
     }
 
     @Override

@@ -40,6 +40,7 @@ public class Category_items extends RecyclerView.Adapter<Category_items.ViewHold
         holder.luotDanhGiaTextView.setText(String.valueOf(cardItems.getLuotDanhGia()));
         holder.luotTimTextView.setText(String.valueOf(cardItems.getLuotTim()));
 
+
         // Thay thế bằng các hành động liên quan đến like/favorite
         // holder.likeCheckBox.setChecked(cardItems.isLiked());
         // holder.favoriteCheckBox.setChecked(cardItems.isFavorite());

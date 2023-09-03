@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String TABLE_BUA_AN = "Bua_An";
     protected static final String COLUMN_BUA_AN_ID = "id";
     protected static final String COLUMN_TEN_BUA_AN = "tenBuaAn";
+    protected static final String COLUMN_IMAGE_BUA_AN = "anhBuaAn";
 
     protected static final String TABLE_SAVED_FOOD = "MonAn_DaLuu";
     protected static final String COLUMN_SAVED_FOOD_ID = "id";
@@ -75,7 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Câu truy vấn tạo bảng BUAN
     private static final String CREATE_TABLE_BUA_AN = "CREATE TABLE " + TABLE_BUA_AN + " (" +
             COLUMN_BUA_AN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_TEN_BUA_AN + " TEXT NOT NULL);";
+            COLUMN_TEN_BUA_AN + " TEXT NOT NULL,"+
+            COLUMN_IMAGE_BUA_AN + " TEXT NOT NULL);" ;
 
     // Câu truy vấn tạo bảng FOOD
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE " + TABLE_FOOD + "(" +
@@ -151,6 +154,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+        @SuppressLint("Range")
+        public Food getFoodById(int foodId) {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Food food = null;
+
+            String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_FOOD_ID + " = ?";
+            String[] selectionArgs = {String.valueOf(foodId)};
+            Cursor cursor = db.rawQuery(query, selectionArgs);
+            if (cursor.moveToFirst()) {
+                food = new Food();
+                food.setTenMonAn(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FOOD)));
+                food.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+                food.setPicUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PIC_URL)));
+                food.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                food.setLuotDanhGia(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_DANH_GIA)));
+                food.setLuotTim(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_TIM)));
+                food.setNgayDang(cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_DANG)));
+                food.setIdBuaAn(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_BUA_AN_ID_FK))));
+                food.setUserId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID_FK))));
+                // Lấy tên tác giả
+                String userId = cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID_FK));
+                String tenTacGia = getUserNameById(Integer.parseInt(userId));
+                food.setTenTacGia(tenTacGia);
+            }
+            cursor.close();
+            db.close();
+
+            return food;
+        }
     public void addFood(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> food = new ArrayList<>();
@@ -163,6 +195,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         food.forEach(f ->{
            db.insert(TABLE_FOOD, null, f);
         });
+    }
+
+    public void addThongBao(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<ContentValues> thongBao = new ArrayList<>();
+
+        ContentValues cv1 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv2 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv3 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv4 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        thongBao.add(cv1);
+        thongBao.add(cv2);
+        thongBao.add(cv3);
+        thongBao.add(cv4);
+        thongBao.forEach(f ->{
+            db.insert(TABLE_THONG_BAO, null, f);
+        });
+
     }
 
     @SuppressLint("Range")
@@ -196,10 +246,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addUser(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> user = new ArrayList<>();
+
         ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1","hoangbrato@gmail.com", "ADMIN");
         ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "minhhoang2401@gmail.com", "USER");
         user.add(cv1);
         user.add(cv2);
+
         user.forEach(f ->{
             db.insert(TABLE_USER, null, f);
         });
@@ -224,16 +276,79 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addBuaAn(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> buaAn = new ArrayList<>();
-        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng");
-        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa");
-        ContentValues cv3 = createContentValuesBuaAn("Bữa tối");
+        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv3 = createContentValuesBuaAn("Bữa tối", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv4 = createContentValuesBuaAn("Bữa Phụ", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv5 = createContentValuesBuaAn("Ăn Vặt", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+
+
+        buaAn.add(cv1);
+        buaAn.add(cv2);
+        buaAn.add(cv3);
+        buaAn.add(cv4);
+        buaAn.add(cv5);
+        buaAn.forEach(f ->{
+            db.insert(TABLE_BUA_AN, null, f);
+        });
+    }
+    public void updateLuotTim(int foodId, int newLuotTim) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_LUOT_TIM, newLuotTim);
+
+        // Xác định điều kiện cho câu lệnh UPDATE
+        String whereClause = COLUMN_FOOD_ID + " = ?";
+        String[] whereArgs = { String.valueOf(foodId) };
+
+        // Thực hiện câu lệnh UPDATE
+        int rowsUpdated = db.update(TABLE_FOOD, values, whereClause, whereArgs);
+
+        db.close();
+
+        if (rowsUpdated > 0) {
+            // Cập nhật thành công
+        } else {
+            // Không tìm thấy dòng nào cần cập nhật hoặc có lỗi xảy ra
+        }
+    }
+    public void addComment(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<ContentValues> buaAn = new ArrayList<>();
+        ContentValues cv1 = createContentValuesComment("Ngon quá đi", 1, 1);
+        ContentValues cv2 = createContentValuesComment("Ngon thật á", 1, 1);
+        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 1, 1);
 
         buaAn.add(cv1);
         buaAn.add(cv2);
         buaAn.add(cv3);
         buaAn.forEach(f ->{
-            db.insert(TABLE_BUA_AN, null, f);
+            db.insert(TABLE_COMMENT, null, f);
         });
+    }
+
+
+    @SuppressLint("Range")
+    public ArrayList<BuaAn> getAllBuaAn() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<BuaAn> buaAnList = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_BUA_AN;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BuaAn buaAn = new BuaAn();
+                buaAn.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_BUA_AN_ID)));
+                buaAn.setTenBuaAn(cursor.getString(cursor.getColumnIndex(COLUMN_TEN_BUA_AN)));
+                buaAn.setImage(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_BUA_AN)));
+                buaAnList.add(buaAn);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return buaAnList;
     }
     @SuppressLint("Range")
     public ArrayList<Food> getAllFoods() {
@@ -265,8 +380,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return foodList;
     }
+    @SuppressLint("Range")
+    public List<Notification> getAllThongBao() {
+        List<Notification> notificationList = new ArrayList<>();
+
+        // Viết truy vấn SQL để lấy thông báo từ bảng thong_bao
+        String selectQuery = "SELECT * FROM thong_bao";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Duyệt qua các dòng kết quả và thêm chúng vào danh sách notificationList
+        if (cursor.moveToFirst()) {
+            do {
+                Notification notification = new Notification();
+
+                notification.setText_noti(cursor.getString(cursor.getColumnIndex(COLUMN_NOI_DUNG_THONG_BAO)));
+                notification.setTime_noti(cursor.getString(cursor.getColumnIndex(COLUMN_THOI_GIAN_THONG_BAO)));
+
+                // Điền thêm các trường thông báo khác nếu cần và áp dụng setter cho chúng
+
+                notificationList.add(notification);
+            } while (cursor.moveToNext());
+        }
+
+        // Đóng kết nối và trả về danh sách thông báo
+        cursor.close();
+        db.close();
+        return notificationList;
+    }
 
 
+    @SuppressLint("Range")
+    public ArrayList<Food> getFoodsByBuaAnId(int buaAnId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Food> foodList = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_FOOD + " WHERE " + COLUMN_BUA_AN_ID_FK + " = ?";
+        String[] selectionArgs = {String.valueOf(buaAnId)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Food food = new Food();
+                food.setTenMonAn(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_FOOD)));
+                food.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+                food.setPicUrl(cursor.getString(cursor.getColumnIndex(COLUMN_PIC_URL)));
+                food.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                food.setLuotDanhGia(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_DANH_GIA)));
+                food.setLuotTim(cursor.getInt(cursor.getColumnIndex(COLUMN_LUOT_TIM)));
+                food.setNgayDang(cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_DANG)));
+
+                foodList.add(food);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return foodList;
+    }
 
     @SuppressLint("Range")
     public String getUserNameById(int userId) {
@@ -314,6 +487,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cv;
     }
+    private ContentValues createContentValuesThongBao(String noiDung, int idUser, String thoiGian){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NOI_DUNG_THONG_BAO, noiDung);
+        cv.put(COLUMN_ID_USER_FK_THONG_BAO, idUser);
+        cv.put(COLUMN_THOI_GIAN_THONG_BAO, thoiGian);
+
+
+
+        return cv;
+    }
+    private ContentValues createContentValuesComment(String noiDung, int idUser, int idFood){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NOI_DUNG, noiDung);
+        cv.put(COLUMN_ID_USER_FK_COMMENT, idUser);
+        cv.put(COLUMN_ID_FOOD_FK_COMMENT, idFood);
+
+        return cv;
+    }
     private ContentValues createContentValuesUser(String name, String userName, String password, String email, String userRole){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
@@ -323,9 +514,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USER_ROLE, userRole);
         return cv;
     }
-    private ContentValues createContentValuesBuaAn(String ten){
+    private ContentValues createContentValuesBuaAn(String ten, String image){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TEN_BUA_AN, ten);
+        cv.put(COLUMN_IMAGE_BUA_AN, image);
         return cv;
     }
 
@@ -361,6 +553,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    @SuppressLint("Range")
+    public MonAn_DaLuu getSaveFoodByIds(int idFood, int idUser) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        MonAn_DaLuu saveFood = null;
+
+        String query = "SELECT * FROM " + TABLE_SAVED_FOOD + " WHERE " + COLUMN_FOOD_ID_FK + " = ? AND " + COLUMN_USER_ID_FK + " = ?";
+        String[] selectionArgs = {String.valueOf(idFood), String.valueOf(idUser)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            saveFood = new MonAn_DaLuu();
+            // Đọc các thông tin về SaveFood từ cursor và gán cho đối tượng SaveFood
+            saveFood.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVED_FOOD_ID)));
+            saveFood.setIdMonAn(cursor.getInt(cursor.getColumnIndex(COLUMN_FOOD_ID_FK)));
+            saveFood.setIdUser(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID_FK)));
+            // Đọc các thông tin khác về SaveFood và gán cho đối tượng SaveFood
+            // ...
+
+        }
+
+        cursor.close();
+        db.close();
+
+        return saveFood;
+    }
     public void deleteAllUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USER, null, null);
@@ -373,36 +590,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_ID_FK, userId);
         values.put(COLUMN_FOOD_ID_FK, foodId);
 
-
         db.insert(TABLE_SAVED_FOOD, null, values);
         db.close();
     }
-    @SuppressLint("Range")
-    public List<Notification> getAllThongBao() {
-        List<Notification> notificationList = new ArrayList<>();
 
-        // Viết truy vấn SQL để lấy thông báo từ bảng thong_bao
-        String selectQuery = "SELECT * FROM thong_bao";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // Duyệt qua các dòng kết quả và thêm chúng vào danh sách thongBaos
-        if (cursor.moveToFirst()) {
-            do {
-//                Notification notification = new Notification();
-//                notification.setId(cursor.getInt(cursor.getColumnIndex("id")));
-//                notification.setNoiDung(cursor.getString(cursor.getColumnIndex("noi_dung_thong_bao")));
-//                // Điền thêm các trường thông báo khác nếu cần
-//
-//                thongBaos.add(thongBao);
-            } while (cursor.moveToNext());
-        }
-
-        // Đóng kết nối và trả về danh sách thông báo
-        db.close();
-        return notificationList;
-    }
 
 
     public void saveComment(String noiDung, int userId, int foodId) {
@@ -415,10 +606,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    @SuppressLint("Range")
+    public ArrayList<User_Comment> getCommentsByFoodId(int foodId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<User_Comment> comments = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_COMMENT + " WHERE " + COLUMN_ID_FOOD_FK_COMMENT + " = ?";
+        String[] selectionArgs = {String.valueOf(foodId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.moveToFirst()) {
+            do {
+                User_Comment comment = new User_Comment();
+                comment.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_COMMENT)));
+                comment.setNoiDung(cursor.getString(cursor.getColumnIndex(COLUMN_NOI_DUNG)));
+                comment.setIdFood(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_FOOD_FK_COMMENT)));
+                comment.setIdUser(cursor.getInt(cursor.getColumnIndex(COLUMN_ID_USER_FK_COMMENT)));
+
+                comments.add(comment);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return comments;
+    }
+
     public void unsaveFood(int userId, int foodId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = COLUMN_USER_ID_FK + " = ? AND " + COLUMN_FOOD_ID + " = ?";
+        String whereClause = COLUMN_USER_ID_FK + " = ? AND " + COLUMN_FOOD_ID_FK + " = ?";
         String[] whereArgs = {String.valueOf(userId), String.valueOf(foodId)};
 
         db.delete(TABLE_SAVED_FOOD, whereClause, whereArgs);
@@ -427,16 +646,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean checkIfFoodIsSaved(int userId, int foodId) {
         SQLiteDatabase db = this.getReadableDatabase();
+        boolean isSaved = false;
 
-        String[] columns = {COLUMN_SAVED_FOOD_ID};
-        String selection = COLUMN_USER_ID_FK + " = ? AND " + COLUMN_FOOD_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(userId), String.valueOf(foodId)};
+        try {
+            String[] columns = {COLUMN_SAVED_FOOD_ID};
+            String selection = COLUMN_USER_ID_FK + " = ? AND " + COLUMN_FOOD_ID_FK + " = ?";
+            String[] selectionArgs = {String.valueOf(userId), String.valueOf(foodId)};
 
-        Cursor cursor = db.query(TABLE_SAVED_FOOD, columns, selection, selectionArgs, null, null, null);
+            Cursor cursor = db.query(TABLE_SAVED_FOOD, columns, selection, selectionArgs, null, null, null);
 
-        boolean isSaved = cursor.getCount() > 0;
+            if (cursor != null) {
+                isSaved = cursor.getCount() > 0;
+                cursor.close();
+            }
+        } catch (SQLiteException e) {
+            // Xử lý lỗi nếu có
+            e.printStackTrace();
+        } finally {
+            db.close(); // Đảm bảo đóng cơ sở dữ liệu sau khi sử dụng
+        }
 
-        cursor.close();
         return isSaved;
     }
 
@@ -542,7 +771,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return numRowsUpdated > 0;
     }
 
-        
+
 
 
 }

@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Food implements Serializable {
 
 
-    private static int id;
+    private static int idTest;
+    private int id;
     private String tenTacGia;
     private String tenMonAn;
     private String description;
@@ -25,16 +26,17 @@ public class Food implements Serializable {
     private int idBuaAn;
     private int userId;
 
-    {
-        setId(getId() + 1);
-    }
+
 
     public Food (){
 
     }
 
+    {
+        idTest++;
+    }
     public Food(String tenMonAn, String description, String nguyenLieu, String cachLam, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang, int idBuaAn, int userId) {
-        this.setId(getId());
+        this.id = idTest; // Gán id cho đối tượng mới và tăng idTest
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
@@ -46,11 +48,9 @@ public class Food implements Serializable {
         this.description = description;
         this.setUserId(userId);
         this.idBuaAn = idBuaAn;
-
-
     }
     public Food(String tenMonAn, String description, String picUrl, String time, int luotDanhGia, int luotTim, String ngayDang,  String userName) {
-        this.setId(getId());
+        this.id = idTest++;
         this.picUrl = picUrl;
         this.time = time;
         this.tenMonAn = tenMonAn;
@@ -64,12 +64,12 @@ public class Food implements Serializable {
 
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Food.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getLuotTim() {

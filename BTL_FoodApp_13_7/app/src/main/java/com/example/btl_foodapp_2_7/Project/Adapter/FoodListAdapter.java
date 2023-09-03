@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHolder> {
-    ArrayList<Food> items;
+    List<Food> items;
     Context context;
 
 
-    public FoodListAdapter(ArrayList<Food> items) {
+    public FoodListAdapter(List<Food> items) {
         this.items = items;
     }
 
@@ -48,20 +48,28 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
 
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.titleTxt.setText(items.get(position).getTenMonAn());
         holder.nameTxt.setText(items.get(position).getTenTacGia());
         holder.timeTxt.setText(items.get(position).getTime());
         holder.scoreTxt.setText("" + items.get(position).getLuotDanhGia());
         holder.score1Txt.setText("" + items.get(position).getLuotTim());
         int currentScore = holder.getCurrentScore1();
-        Food category = items.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//        Food category = items.get(position);
+        int idFood = items.get(position).getId();
+
+
+        holder.pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int idFood = position+ 1;
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                intent.putExtra("itemName", category.getUserId());
+                intent.putExtra("idBuaAn", idFood);
+                if (idFood >= 0) {
+                    Toast.makeText(v.getContext(), String.valueOf(idFood), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v.getContext(), "Invalid item position", Toast.LENGTH_SHORT).show();
+                }
                 v.getContext().startActivity(intent);
             }
         });
@@ -81,7 +89,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         int id = db2.getIduserByName(username);
         int clickedPosition = position+1;
         boolean isSaved = db2.checkIfFoodIsSaved(id, clickedPosition);
-
+        Log.i("boolean", String.valueOf(isSaved));
         holder.btnLike.setChecked(isSaved);
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,16 +99,26 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 int id = db2.getIduserByName(username);
                 boolean isChecked = holder.btnLike.isChecked();
                 int clickedPosition = position+1;
+                Food food= db2.getFoodById(clickedPosition);
+                int luotTim = food.getLuotTim();
+//                if(db2.getSaveFoodByIds(clickedPosition, id)!=null){
+//
+//                }
                 if(isChecked){
-                    Toast.makeText(view.getContext(), String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
+
+                    int luotTim2 = luotTim+1;
+                    food.setLuotTim(luotTim2);
+                    db2.updateLuotTim(clickedPosition, luotTim2);
+                    Toast.makeText(view.getContext(), String.valueOf(luotTim2), Toast.LENGTH_SHORT).show();
                     db2.saveFood(id, clickedPosition);
                 }
                 else {
-                    Toast.makeText(view.getContext(), String.valueOf(clickedPosition), Toast.LENGTH_SHORT).show();
                     db2.unsaveFood(id, clickedPosition);
+                    int luotTim2 = luotTim-1;
+                    food.setLuotTim(luotTim2);
+                    db2.updateLuotTim(clickedPosition, luotTim2);
 
-
-
+                    Toast.makeText(view.getContext(), String.valueOf(luotTim2), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -136,37 +154,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
             currentScore1 = Integer.parseInt(score1Txt.getText().toString());
 
 
-//
-//            btnLike.setChecked(isLiked);
-//
-//            btnLike.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int clickedPosition = getAdapterPosition();
-//                    boolean isChecked = btnLike.isChecked();
-//
-//                    if (clickedPosition != RecyclerView.NO_POSITION) {
-//                        // Thay đổi trạng thái checked của btnLike
-//                        btnLike.setChecked(!isChecked);
-//
-//                        // Cập nhật biến isLiked
-//                        isLiked = !isChecked;
-//
-//                        if (isChecked) {
-//                            // Đánh dấu món ăn là đã lưu và cập nhật UI
-//                            currentScore1--;
-//                            db2.unsaveFood(id, clickedPosition + 1);
-//                        } else {
-//                            // Đánh dấu món ăn là chưa lưu và cập nhật UI
-//                            currentScore1++;
-//                            db2.saveFood(id, clickedPosition + 1);
-//                        }
-//
-//                        // Cập nhật số lượng lượt tim vào UI
-//                        score1Txt.setText(String.valueOf(currentScore1));
-//                    }
-//                }
-//            });
         }
     }
 }

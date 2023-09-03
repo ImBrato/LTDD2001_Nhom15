@@ -16,19 +16,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/foodPic"
+                android:layout_width="wrap_content"
+                android:layout_height="310dp"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/chitiet1" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/foodPic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="310dp"
-                    android:scaleType="fitStart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/chitiet1" />
 
                 <ImageView
                     android:id="@+id/backBtn"
@@ -78,12 +75,12 @@
                     app:layout_constraintVertical_bias="0.0">
 
                     <TextView
-                        android:id="@+id/titleTxt"
+                        android:id="@+id/textViewNameFood"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity=""
-                        android:text="Gà Nướng Muối Ớt"
+                        android:text="@string/header"
                         android:textColor="#2B2B2B"
                         android:textSize="25dp"
                         android:textStyle="bold" />
@@ -118,12 +115,12 @@
                             android:layout_marginStart="13dp"
                             android:src="@drawable/profile"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/textView116"
+                            app:layout_constraintEnd_toStartOf="@+id/tenTacGia"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView116"
+                            android:id="@+id/tenTacGia"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -152,7 +149,7 @@
                         android:layout_weight="0.13">
 
                         <ImageView
-                            android:id="@+id/imageView12"
+                            android:id="@+id/imgAnhFood"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginTop="30dp"
@@ -163,16 +160,16 @@
                             app:srcCompat="@drawable/ic_like_stt2" />
 
                         <TextView
-                            android:id="@+id/scoreTxt"
+                            android:id="@+id/luotThich"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:text="123"
                             android:textColor="@color/black"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
-                            app:layout_constraintStart_toEndOf="@+id/imageView12"
-                            app:layout_constraintTop_toTopOf="@+id/imageView12" />
+                            app:layout_constraintBottom_toBottomOf="@+id/imgAnhFood"
+                            app:layout_constraintStart_toEndOf="@+id/imgAnhFood"
+                            app:layout_constraintTop_toTopOf="@+id/imgAnhFood" />
 
                         <TextView
                             android:id="@+id/textView16"
@@ -224,9 +221,9 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/nguyenLieu"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="46dp"
                         android:paddingTop="20dp"
                         android:text="Gà ta nặng tầm 1,5 – 2 cân"
                         android:textSize="18dp" />
@@ -326,6 +323,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/buocLam"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Đem gà và các loại rau củ đi sơ chế"
@@ -531,59 +529,19 @@
                         android:elevation="2dp"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/linearLayout13"
-                            android:layout_width="320dp"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/view_cmt"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="20dp"
-                            android:orientation="horizontal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="MissingConstraints">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/profile" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:text="Món ăn bạn làm ngon quá! Mình đã làm thành công"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/linearLayout13"
-                            tools:ignore="MissingConstraints">
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/profile" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:text="Công thức chuẩn lắm bạn"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -612,6 +570,7 @@
                                 android:src="@drawable/profile" />
 
                             <EditText
+                                android:id="@+id/EditnhapComment"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.6"
@@ -621,6 +580,7 @@
                                 android:textSize="16dp" />
 
                             <CheckBox
+                                android:id="@+id/sendComments"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="8dp"
@@ -655,3 +615,5 @@
     </ScrollView>
 
 </RelativeLayout>
+
+

@@ -5,10 +5,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,11 +26,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.btl_foodapp_2_7.Project.Activity.DetailActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.ItemsActivity;
 import com.example.btl_foodapp_2_7.Project.Activity.SlideItem;
+import com.example.btl_foodapp_2_7.Project.Activity.TimKiemActivity;
 import com.example.btl_foodapp_2_7.Project.Adapter.CategoryListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.FoodListAdapter;
 import com.example.btl_foodapp_2_7.Project.Adapter.SlideAdapter;
 import com.example.btl_foodapp_2_7.Project.Model.Category;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
+import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
 
 import java.util.ArrayList;
@@ -37,15 +42,18 @@ import java.util.List;
 public class Fragment_trang_chu extends Fragment {
     private RecyclerView.Adapter adapterFoodList;
     private RecyclerView recyclerViewFood;
+    private RecyclerView recyclerViewFood2;
+    private RecyclerView recyclerViewFood3;
     ViewPager2 viewPager2;
 
-    RecyclerView homeHorizontalRec,view1;
-    List<Category> homeHormodelList;
-    CategoryListAdapter homeHorAdapter;
+    private RecyclerView homeHorizontalRec,view1,view2, view3;
+    private RecyclerView.Adapter homeHormodelList;
+
     //    MyDAO mydao;
     CheckBox checkFav;
 
     private Handler handler = new Handler();
+    List<Food> searchResults = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +75,7 @@ public class Fragment_trang_chu extends Fragment {
         view1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "thanh cong", Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 startActivity(intent);
 
@@ -75,25 +83,7 @@ public class Fragment_trang_chu extends Fragment {
         });
 
         //Hiển thị danh sách danh mục món ăn
-        homeHorizontalRec = view.findViewById(R.id.home_hor_rec);
-        homeHormodelList = new ArrayList<>();
 
-
-        homeHormodelList.add(new Category(R.drawable.pic_ansang, "Sáng"));
-        homeHormodelList.add(new Category(R.drawable.pic_buatrua, "Trưa"));
-        homeHormodelList.add(new Category(R.drawable.pic_buatoi, "Tối"));
-        homeHormodelList.add(new Category(R.drawable.pic_anlau, "Lẩu"));
-        homeHormodelList.add(new Category(R.drawable.pic_anchay, "Chay"));
-        homeHormodelList.add(new Category(R.drawable.pic_banh, "Bánh"));
-        homeHormodelList.add(new Category(R.drawable.pic_tea, "Trà sữa"));
-        homeHormodelList.add(new Category(R.drawable.pic_kem, "Kem"));
-        homeHorAdapter = new CategoryListAdapter(getActivity(), homeHormodelList);
-
-        homeHorizontalRec.setAdapter(homeHorAdapter);
-
-        homeHorizontalRec.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        homeHorizontalRec.setHasFixedSize(true);
-        homeHorizontalRec.setNestedScrollingEnabled(false);
 
 
         viewPager2 = view.findViewById(R.id.viewPager);
@@ -134,6 +124,21 @@ public class Fragment_trang_chu extends Fragment {
                 handler.postDelayed(runnable, 2000);
             }
         });
+
+        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
+        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+                if(editTextSearch.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Nhập tên món ăn", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                performSearch(editTextSearch.getText().toString());
+                return true;
+            }
+
+        });
+
         return view;
 
 
@@ -149,13 +154,28 @@ public class Fragment_trang_chu extends Fragment {
         DatabaseHelper db2 = new DatabaseHelper(getActivity());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewFood = view.findViewById(R.id.view1);
-        recyclerViewFood.setLayoutManager(linearLayoutManager);
 
+        recyclerViewFood = view.findViewById(R.id.view1);
+//        recyclerViewFood2 = view.findViewById(R.id.view2);
+//        recyclerViewFood3 = view.findViewById(R.id.view3);
+
+        recyclerViewFood.setLayoutManager(linearLayoutManager);
+//        recyclerViewFood2.setLayoutManager(linearLayoutManager);
+//        recyclerViewFood3.setLayoutManager(linearLayoutManager);
 
         adapterFoodList = new FoodListAdapter(db2.getAllFoods());
         recyclerViewFood.setAdapter(adapterFoodList);
+//        recyclerViewFood2.setAdapter(adapterFoodList);
+//        recyclerViewFood3.setAdapter(adapterFoodList);
 
+
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        homeHorizontalRec = view.findViewById(R.id.home_hor_rec);
+        homeHorizontalRec.setLayoutManager(linearLayoutManager2);
+        homeHormodelList = new CategoryListAdapter(db2.getAllBuaAn());
+
+        homeHorizontalRec.setAdapter(homeHormodelList);
 
     }
 
@@ -177,5 +197,24 @@ public class Fragment_trang_chu extends Fragment {
     public void onResume() {
         super.onResume();
         handler.postDelayed(runnable, 3000);
+    }
+    private void performSearch(String searchText) {
+        searchResults.clear(); // Xóa danh sách kết quả tìm kiếm trước đó
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+        List<Food> yourFoodList = db2.getAllFoods();
+        for (Food food : yourFoodList) {
+            if (food.getTenMonAn().toLowerCase().contains(searchText.toLowerCase())) {
+                searchResults.add(food);
+            }
+        }
+        if(searchResults.isEmpty()){
+            Toast.makeText(getContext(), "Không tìm thấy món ăn thêo yêu cầu", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(getContext(), TimKiemActivity.class);
+            intent.putExtra("searchResults", new ArrayList<>(searchResults)); // Gửi danh sách như một ArrayList
+            startActivity(intent);
+        }
+
     }
 }

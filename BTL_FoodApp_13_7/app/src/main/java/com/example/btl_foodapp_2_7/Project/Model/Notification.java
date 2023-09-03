@@ -45,6 +45,10 @@ public class Notification {
         this.time_noti = time_noti;
     }
 
+    public String getAvt_noti2() {
+        return avt_noti2;
+    }
+
     public void setAvt_noti2(String avt_noti) {
         this.avt_noti2 = avt_noti;
     }
