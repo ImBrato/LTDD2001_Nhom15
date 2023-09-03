@@ -66,9 +66,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
                 intent.putExtra("idBuaAn", idFood);
                 if (idFood >= 0) {
-                    Toast.makeText(v.getContext(), String.valueOf(idFood), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), String.valueOf(idFood), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(v.getContext(), "Invalid item position", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "Invalid item position", Toast.LENGTH_SHORT).show();
                 }
                 v.getContext().startActivity(intent);
             }

@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
             prefs.edit().putBoolean("firstRun", false).commit();
         }
         db = new DatabaseHelper(MainActivity.this);
-//        db.recreateDatabase();
+        db.recreateDatabase();
 //        db.addFood();
-//        db.addUser();
-//        db.addBuaAn();
-//        db.addComment();
-//        db.addThongBao();
-//        db.saveComment("day la comment1", 1,1);
+        db.addUser();
+        db.addBuaAn();
+        db.addComment();
+        db.addThongBao();
+        db.saveComment("day la comment1", 1,1);
 
         url = "https://64f18dbb0e1e60602d23eb4e.mockapi.io/api/food";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(MainActivity.this, "Lỗi xử lý dữ liệu JSON" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "Lỗi xử lý dữ liệu JSON" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

@@ -186,12 +186,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addFood(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> food = new ArrayList<>();
-        ContentValues cv1 = createContentValuesFood("Ga ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg","1 tiếng", 100, 50, "17/8/2023", 1,  1);
-        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "https://cdn.tgdd.vn/Files/2021/07/28/1371483/bi-quyet-lam-mon-vit-nuong-van-dinh-thom-ngon-nuc-mui-ca-nha-deu-me-202201030905519106.jpg","30 phút",100, 50, "18/7/2023", 1,1);
-        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
-        food.add(cv1);
-        food.add(cv2);
-        food.add(cv3);
+//        ContentValues cv1 = createContentValuesFood("Ga ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg","1 tiếng", 100, 50, "17/8/2023", 1,  1);
+//        ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "https://cdn.tgdd.vn/Files/2021/07/28/1371483/bi-quyet-lam-mon-vit-nuong-van-dinh-thom-ngon-nuc-mui-ca-nha-deu-me-202201030905519106.jpg","30 phút",100, 50, "18/7/2023", 1,1);
+////        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+//        food.add(cv1);
+//        food.add(cv2);
+//        food.add(cv3);
         food.forEach(f ->{
            db.insert(TABLE_FOOD, null, f);
         });

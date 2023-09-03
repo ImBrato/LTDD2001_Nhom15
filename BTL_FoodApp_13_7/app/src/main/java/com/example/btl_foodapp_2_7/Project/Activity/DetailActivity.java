@@ -81,14 +81,14 @@ public class DetailActivity extends AppCompatActivity {
              tenMonAn = food.getTenMonAn();
             tenTacGiaMonAn = food.getTenTacGia();
             luotTim = food.getLuotTim();
-            nguyenLieuLam = food.getNguyenLieu();
-            buocLamm = food.getCachLam();
+//            nguyenLieuLam = food.getNguyenLieu();
+//            buocLamm = food.getCachLam();
             urlPic = food.getPicUrl();
-            Toast.makeText(DetailActivity.this, tenMonAn, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailActivity.this, tenMonAn, Toast.LENGTH_SHORT).show();
             // ...
         } else {
             // Đối tượng food là null, bạn có thể xử lý trường hợp này tùy ý, ví dụ:
-            Toast.makeText(DetailActivity.this, "Food object is null", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(DetailActivity.this, "Food object is null", Toast.LENGTH_SHORT).show();
         }
 
         SharedPreferences preferences = DetailActivity.this.getSharedPreferences("login", Context.MODE_PRIVATE);
