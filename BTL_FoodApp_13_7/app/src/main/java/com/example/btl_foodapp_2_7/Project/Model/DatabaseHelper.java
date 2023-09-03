@@ -201,14 +201,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> thongBao = new ArrayList<>();
 
-        ContentValues cv1 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv2 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv3 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv4 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv1 = createContentValuesThongBao("Chào mừng bạn đến với FOOD APP  ", 1, "13/03/2002");
+        ContentValues cv2 = createContentValuesThongBao("Có món ăn mới dành cho bạn, hãy xem!", 2, "8/03/2002");
+        ContentValues cv3 = createContentValuesThongBao("Trải nghiệm hôm nay của bạn thế nào?", 3, "14/03/2002");
+
         thongBao.add(cv1);
         thongBao.add(cv2);
         thongBao.add(cv3);
-        thongBao.add(cv4);
+
+
         thongBao.forEach(f ->{
             db.insert(TABLE_THONG_BAO, null, f);
         });
@@ -249,8 +250,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1","hoangbrato@gmail.com", "ADMIN");
         ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "minhhoang2401@gmail.com", "USER");
+        ContentValues cv3 = createContentValuesUser("Toàn Mỹ ", "user", "1", "toanmy@gmail.com", "USER");
+        ContentValues cv4 = createContentValuesUser("Thanh Thuyen ", "user", "1", "thanhthuyen@gmail.com", "USER");
+        ContentValues cv5 = createContentValuesUser("Hoàng Ân ", "user", "1", "hoangan@gmail.com", "USER");
         user.add(cv1);
         user.add(cv2);
+        user.add(cv3);
+        user.add(cv4);
+        user.add(cv5);
 
         user.forEach(f ->{
             db.insert(TABLE_USER, null, f);
@@ -276,11 +283,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addBuaAn(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> buaAn = new ArrayList<>();
-        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
-        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
-        ContentValues cv3 = createContentValuesBuaAn("Bữa tối", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
-        ContentValues cv4 = createContentValuesBuaAn("Bữa Phụ", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
-        ContentValues cv5 = createContentValuesBuaAn("Ăn Vặt", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg");
+        ContentValues cv1 = createContentValuesBuaAn("Bữa sáng", "https://tse4.mm.bing.net/th?id=OIP.37CB7qc9CvRDVLX85cjqbAHaFb&pid=Api&P=0&h=180");
+        ContentValues cv2 = createContentValuesBuaAn("Bữa trưa", "https://tse1.mm.bing.net/th?id=OIP.VDOiQs6TxAruzVYMQiDcnwHaHe&pid=Api&P=0&h=180");
+        ContentValues cv3 = createContentValuesBuaAn("Bữa tối", "hhttps://www.clipartmax.com/png/middle/124-1241226_breakfast-icon-png.png");
+        ContentValues cv4 = createContentValuesBuaAn("Bữa Phụ", "https://cdn-icons-png.flaticon.com/512/1046/1046745.png");
+        ContentValues cv5 = createContentValuesBuaAn("Ăn Vặt", "https://tse3.mm.bing.net/th?id=OIP.SmoZ8ZiDCwKi7ea_kbtgmQHaHa&pid=Api&P=0&h=180");
 
 
         buaAn.add(cv1);
@@ -312,16 +319,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Không tìm thấy dòng nào cần cập nhật hoặc có lỗi xảy ra
         }
     }
+    public void updateUser(int idUser, String email, String name, String matKhau) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_PASSWORD, matKhau);
+
+        // Xác định điều kiện cho câu lệnh UPDATE
+        String whereClause = COLUMN_USER_ID + " = ?";
+        String[] whereArgs = { String.valueOf(idUser) };
+
+        // Thực hiện câu lệnh UPDATE
+        int rowsUpdated = db.update(TABLE_USER, values, whereClause, whereArgs);
+
+        db.close();
+
+        if (rowsUpdated > 0) {
+            // Cập nhật thành công
+        } else {
+            // Không tìm thấy dòng nào cần cập nhật hoặc có lỗi xảy ra
+        }
+    }
     public void addComment(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> buaAn = new ArrayList<>();
         ContentValues cv1 = createContentValuesComment("Ngon quá đi", 1, 1);
-        ContentValues cv2 = createContentValuesComment("Ngon thật á", 1, 1);
-        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 1, 1);
+        ContentValues cv2 = createContentValuesComment("Ngon thật á", 2, 3);
+        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 3, 2);
+        ContentValues cv4 = createContentValuesComment("Ngon quá đi mất", 4, 2);
+        ContentValues cv5 = createContentValuesComment("Món này tuyệt", 3, 3);
+        ContentValues cv6 = createContentValuesComment("Ngon quá đi mất", 5, 1);
+        ContentValues cv7 = createContentValuesComment("Món này tuyệt", 2, 5);
+        ContentValues cv8 = createContentValuesComment("Ngon quá đi mất", 4, 4);
+        ContentValues cv9 = createContentValuesComment("Ngon quá đi mất", 3, 4);
+        ContentValues cv10 = createContentValuesComment("v", 5, 2);
+        ContentValues cv11= createContentValuesComment("Ngon quá đi mất", 3, 3);
+        ContentValues cv12= createContentValuesComment("v", 4, 4);
+        ContentValues cv13 = createContentValuesComment("Ngon quá đi mất", 2, 2);
+        ContentValues cv14= createContentValuesComment("Món này tuyệt", 2, 3);
+        ContentValues cv15= createContentValuesComment("ngon ngon", 3, 2);
 
         buaAn.add(cv1);
         buaAn.add(cv2);
         buaAn.add(cv3);
+        buaAn.add(cv4);
+        buaAn.add(cv5);
+        buaAn.add(cv6);
+        buaAn.add(cv7);
+        buaAn.add(cv8);
+        buaAn.add(cv9);
+        buaAn.add(cv10);
+        buaAn.add(cv11);
+        buaAn.add(cv12);
+        buaAn.add(cv13);
+        buaAn.add(cv14);
+        buaAn.add(cv15);
+
         buaAn.forEach(f ->{
             db.insert(TABLE_COMMENT, null, f);
         });
@@ -604,6 +658,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ID_USER_FK_COMMENT, userId);
         db.insert(TABLE_COMMENT, null, values);
         db.close();
+    }
+
+    @SuppressLint("Range")
+    public String getNameByUserName(String userName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String name = null;
+
+        // Tạo một câu truy vấn SQL để lấy tên từ bảng người dùng dựa trên userName
+        String query = "SELECT " + COLUMN_NAME + " FROM " + TABLE_USER + " WHERE " +
+                COLUMN_USERNAME + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{userName});
+
+        // Kiểm tra xem có dữ liệu trả về hay không
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+        }
+
+        cursor.close();
+        db.close();
+
+        return name;
     }
 
     @SuppressLint("Range")

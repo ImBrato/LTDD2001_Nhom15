@@ -1,13 +1,23 @@
 package com.example.btl_foodapp_2_7.Project.Fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.btl_foodapp_2_7.Project.Activity.LoginActivity;
+import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
 import com.example.btl_foodapp_2_7.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +34,7 @@ public class Fragment_admin_caidat extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView txtUserName, txtLogout;
 
     public Fragment_admin_caidat() {
         // Required empty public constructor
@@ -61,5 +72,35 @@ public class Fragment_admin_caidat extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin_caidat, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        DatabaseHelper db2 = new DatabaseHelper(getActivity());
+
+//        String username = preferences.getString("username", "");
+        if (preferences.contains("username")) {
+            String username = preferences.getString("username", "");
+            txtLogout = view.findViewById(R.id.textView11);
+            txtLogout.setText(username.toString());
+
+        } else {
+            Toast.makeText(getContext(), "Chưa đăng nhập", Toast.LENGTH_SHORT).show();
+        }
+        txtLogout = view.findViewById(R.id.txtSettingLogout);
+        txtLogout.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = preferences.edit();
+            FirebaseAuth.getInstance().signOut();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+
+            startActivity(intent);
+        });
+
+
     }
 }

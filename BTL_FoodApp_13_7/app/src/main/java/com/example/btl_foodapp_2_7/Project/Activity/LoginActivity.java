@@ -21,8 +21,14 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.cloudinary.api.exceptions.ApiException;
 import com.example.btl_foodapp_2_7.Project.Model.DatabaseHelper;
+import com.example.btl_foodapp_2_7.Project.Model.Food;
 import com.example.btl_foodapp_2_7.R;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +43,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LoginActivity extends AppCompatActivity {
     private TextView tvDangky;
     private Button btnDangnhap;
@@ -44,8 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView loginGoogle;
     SQLiteDatabase db;
     LottieAnimationView lottieAnimationView;
-
-
+    private boolean hasRunOnce = false;
         private static final int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -70,6 +79,72 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.inputUsername);
         password = findViewById(R.id.editTextTextPassword);
         loginGoogle = findViewById(R.id.login_google);
+
+        SharedPreferences  prefs = getPreferences(this.MODE_PRIVATE);
+        if(prefs.getBoolean("firstRun", false )) {
+
+            DatabaseHelper db2 = new DatabaseHelper(LoginActivity.this);
+            db2.recreateDatabase();
+            db2.addFood();
+            db2.addUser();
+            db2.addBuaAn();
+            db2.addComment();
+            db2.addThongBao();
+            String url = "https://64f18dbb0e1e60602d23eb4e.mockapi.io/api/food";
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    Food food = new Food();
+                                    food.setId(jsonObject.getInt("id"));
+                                    food.setTenMonAn(jsonObject.getString("food_name"));
+                                    food.setDescription(jsonObject.getString("description"));
+                                    food.setNguyenLieu(jsonObject.getString("nguyen_lieu"));
+                                    food.setCachLam(jsonObject.getString("cach_lam"));
+                                    food.setPicUrl(jsonObject.getString("picUrl"));
+                                    food.setTime(jsonObject.getString("time"));
+                                    food.setIdBuaAn(jsonObject.getInt("buaAnId"));
+                                    food.setUserId(jsonObject.getInt("user_id"));
+                                    db2.insertFood(food);
+                                }
+                            } catch (JSONException e) {
+                                // Toast.makeText(MainActivity.this, "Lỗi xử lý dữ liệu JSON" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // Toast.makeText(MainActivity.this, "Lỗi khi fetch API", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            Volley.newRequestQueue(this).add(request);
+            prefs.edit().putBoolean("firstRun", true).commit();
+        }
+
+
+
+//        if (!hasRunOnce) {
+//            // Đoạn mã sẽ chỉ chạy khi hasRunOnce là false
+//            DatabaseHelper db2 = new DatabaseHelper(LoginActivity.this);
+//            db2.recreateDatabase();
+//            // db.addFood();
+//            db2.addUser();
+//            db2.addBuaAn();
+//            db2.addComment();
+//            db2.addThongBao();
+//            db2.saveComment("day la comment1", 1, 1);
+//
+
+//
+//            // Sau khi đã chạy, đặt hasRunOnce thành true để không chạy lại
+//            hasRunOnce = true;
+//        }
+
 
         tvDangky = findViewById(R.id.tvBackLogin);
 
@@ -114,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("username", usernameTxt);
                     editor.putString("password", passwordTxt);
-                    Toast.makeText(LoginActivity.this, passwordTxt, Toast.LENGTH_SHORT).show();
+
                     editor.apply();
 
                 }
@@ -139,7 +214,7 @@ public class LoginActivity extends AppCompatActivity {
     private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        Toast.makeText(LoginActivity.this, "da click", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -193,10 +268,10 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("username", email);
-            Toast.makeText(LoginActivity.this, displayName, Toast.LENGTH_SHORT).show();
+
             editor.apply();
         } else {
-            Toast.makeText(LoginActivity.this, "", Toast.LENGTH_SHORT).show();
+
         }
     }
 }

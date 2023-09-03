@@ -47,7 +47,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ItemsActivity.class);
                 intent.putExtra("buaAnId", buaAn);
-                Toast.makeText(v.getContext(), String.valueOf(buaAn), Toast.LENGTH_SHORT).show();
+
                 v.getContext().startActivity(intent);
             }
         });

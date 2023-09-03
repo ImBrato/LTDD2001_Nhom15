@@ -89,7 +89,7 @@ public class fragment_admin_mail extends Fragment {
                 ThongBao thongbao = new ThongBao(edtNoiDungThongBao.getText().toString(), db2.getIduserByName(username));
 
                 db2.saveThongBao(thongbao);
-                Toast.makeText(getActivity(), "Nút đã được nhấn!" + edtNoiDungThongBao.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Đăng thông báo thành công! Nội dung: " + edtNoiDungThongBao.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

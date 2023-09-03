@@ -2,6 +2,7 @@ package com.example.btl_foodapp_2_7.Project.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dangbaiTxt;
     private TextView caidatTxt1;
     private TextView caidatTxt;
+    private ImageView imageView3;
 
     protected APIRequestHelper apiRequestHelper;
 
@@ -65,71 +67,12 @@ public class MainActivity extends AppCompatActivity {
     String url;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences  prefs = getPreferences(this.MODE_PRIVATE);
-        if(prefs.getBoolean("firstRun", true)) {
-            DatabaseHelper db = new DatabaseHelper(MainActivity.this);
-            db.addFood();
-            db.addUser();
-            db.addBuaAn();
-            db.addComment();
-            db.addThongBao();
-            prefs.edit().putBoolean("firstRun", false).commit();
-        }
-        db = new DatabaseHelper(MainActivity.this);
-        db.recreateDatabase();
-//        db.addFood();
-        db.addUser();
-        db.addBuaAn();
-        db.addComment();
-        db.addThongBao();
-        db.saveComment("day la comment1", 1,1);
-
-        url = "https://64f18dbb0e1e60602d23eb4e.mockapi.io/api/food";
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                Food food = new Food();
-                                food.setId(jsonObject.getInt("id"));
-                                food.setTenMonAn(jsonObject.getString("food_name"));
-                                food.setDescription(jsonObject.getString("description"));
-                                food.setNguyenLieu(jsonObject.getString("nguyen_lieu"));
-                                food.setCachLam(jsonObject.getString("cach_lam"));
-                                food.setPicUrl(jsonObject.getString("picUrl"));
-                                food.setTime(jsonObject.getString("time"));
-                                food.setIdBuaAn(jsonObject.getInt( "buaAnId"));
-
-                                food.setUserId(jsonObject.getInt("user_id"));
-//                                Toast.makeText(MainActivity.this, "dc r", Toast.LENGTH_SHORT).show();
-
-                                // Lưu food vào CSDL
-                                db.insertFood(food);
-                                Log.i("food", String.valueOf(food));
-
-
-
-                            }
-                        } catch (JSONException e) {
-//                            Toast.makeText(MainActivity.this, "Lỗi xử lý dữ liệu JSON" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Lỗi khi fetch API", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        Volley.newRequestQueue(this).add(request);
 
         //        fetchAndInsertFoodData();
 

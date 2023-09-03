@@ -54,6 +54,7 @@ public class DangBaiActivity extends AppCompatActivity {
         thoiGianNau = findViewById(R.id.thoigianNau);
         moTa = findViewById(R.id.moTa);
         cachLam = findViewById(R.id.nguyenLieu_cachLam1);
+
         nguyenLieu = findViewById(R.id.nguyenLieu_cachLam2);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -64,11 +65,13 @@ public class DangBaiActivity extends AppCompatActivity {
                     // Tạo một đối tượng Food từ dữ liệu người dùng nhập
                     String currentTime = sdf.format(new Date());
                     Log.i("tag", currentTime);
-                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), getTextMess(nguyenLieu), getTextMess(cachLam), "", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
+                    Food newFood = new Food(getTextMess(tenMonAn), getTextMess(moTa), getTextMess(nguyenLieu), getTextMess(cachLam), "https://foursquare.com/img/categories/food/default_256.png", getTextMess(thoiGianNau), 1,1,currentTime, 1,1);
 
 
                     DatabaseHelper db = new DatabaseHelper(DangBaiActivity.this);
                     db.insertFood(newFood);
+                Intent intent = new Intent(DangBaiActivity.this, MainActivity.class);
+                startActivity(intent);
                     showToast("Đăng món ăn thành công");
 
 
