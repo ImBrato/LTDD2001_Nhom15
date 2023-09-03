@@ -188,10 +188,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<ContentValues> food = new ArrayList<>();
         ContentValues cv1 = createContentValuesFood("Ga ", "Nướng rất ngon", "Ga", "Bỏ vào nồi nướng", "https://cdn.tgdd.vn/2020/12/CookProduct/2-1200x676-1.jpg","1 tiếng", 100, 50, "17/8/2023", 1,  1);
         ContentValues cv2 = createContentValuesFood("Vịt ", "Nướng rất ngon", "Bò", "Bỏ vào nồi chiên", "https://cdn.tgdd.vn/Files/2021/07/28/1371483/bi-quyet-lam-mon-vit-nuong-van-dinh-thom-ngon-nuc-mui-ca-nha-deu-me-202201030905519106.jpg","30 phút",100, 50, "18/7/2023", 1,1);
-        ContentValues cv3 = createContentValuesFood("Ga Ga", "Nướng rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+
+        ContentValues cv3 = createContentValuesFood("Heo quay", "rất ngon", "Lợn", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/bd/97/a9/bd97a9246247d496b735c3b51330193c.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv4= createContentValuesFood("Goi", "Goi chua ngot", "Thịt lọn", "Trộn", "https://i.pinimg.com/564x/1e/65/4f/1e654fac595d426d7ffffccd754b5977.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv5 = createContentValuesFood("Bun bo", "Bun bo hue rat ngon", "Lợn", "Nấu trong 30p", "https://i.pinimg.com/564x/80/f0/5e/80f05eb75bea006de7364f102fd7b407.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv6 = createContentValuesFood("Pho", "Pho VietNam dac san", "Lợn", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/e5/81/96/e58196c085877eebe4fea769a6b7d8c3.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv7 = createContentValuesFood("Com suon", "Com suon sai gon", "Gao, thịt heo", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/41/77/15/4177152d793abca3f0de2cbf985e54d7.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv8 = createContentValuesFood("Mi cay", "Mi cay sasin", "Mì, tôm, mực", "Xào mực", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv9 = createContentValuesFood("Mi xao", "Mi xao cay chua ngot", "Mì, ốc", "Nấu mì 30p", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv10 = createContentValuesFood("Bun thit nuong", "Bun nuong thom ngon", "Lợn", "Nướng thịt", "https://i.pinimg.com/564x/83/d0/70/83d07095c04c947396648e22a848bf0f.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv11 = createContentValuesFood("Bun rieu", "Bun rieu Ha Noi", "Bún, riêu cua", "Bún riêu nấu trong 30p", "https://afamilycdn.com/150157425591193600/2021/7/28/cach-lam-thit-heo-chien-nuoc-mam-ngon-1-2-1024x576-16274651688601825681620.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv12 = createContentValuesFood("Banh gao", "Banh gao tu hàn quốc", "Gạo, bột", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/9e/27/00/9e27000c41c7950bd0fea391ab5f23b0.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv13 = createContentValuesFood("Banh mi", "Banh mì heo quay", "Banh mì, thịt heo", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/59/fc/5a/59fc5a3e050db4e050640fb5b7d4fa11.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv14 = createContentValuesFood("Canh bun", "Canh bun ngon", "Bún, riêu", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/2b/89/0d/2b890dac851717bb579062df58176cc0.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+        ContentValues cv15 = createContentValuesFood("Chao", "Chao lòng tuyet", "gạo, thịt heo", "Bỏ vào nồi chiên", "https://i.pinimg.com/564x/ab/39/33/ab3933b271daf511807dd539877ccf74.jpg","30 phút",100, 50, "18/9/20323", 1,2);
+
+
+
         food.add(cv1);
         food.add(cv2);
         food.add(cv3);
+        food.add(cv4);
+        food.add(cv5);
+        food.add(cv6);
+        food.add(cv7);
+        food.add(cv8);
+        food.add(cv9);
+        food.add(cv10);
+        food.add(cv11);
+        food.add(cv12);
+        food.add(cv13);
+        food.add(cv14);
+        food.add(cv15);
+
+
+
         food.forEach(f ->{
            db.insert(TABLE_FOOD, null, f);
         });
@@ -202,13 +233,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<ContentValues> thongBao = new ArrayList<>();
 
         ContentValues cv1 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv2 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv3 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
-        ContentValues cv4 = createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv2 = createContentValuesThongBao("Ban vua cos thong bao.", 2, "24/03/2002");
+        ContentValues cv3 = createContentValuesThongBao("Ban vua cos thong bao.", 3, "24/03/2002");
+        ContentValues cv4 = createContentValuesThongBao("Ban vua cos thong bao.", 4, "24/03/2002");
+        ContentValues cv5 = createContentValuesThongBao("Ban vua cos thong bao.", 5, "24/03/2002");
+        ContentValues cv6 = createContentValuesThongBao("Ban vua cos thong bao.", 2, "24/03/2002");
+        ContentValues cv7 = createContentValuesThongBao("Ban vua cos thong bao.", 3, "24/03/2002");
+        ContentValues cv8 = createContentValuesThongBao("Ban vua cos thong bao.", 4, "24/03/2002");
+        ContentValues cv9 = createContentValuesThongBao("Ban vua cos thong bao.", 2, "24/03/2002");
+        ContentValues cv10 = createContentValuesThongBao("Ban vua cos thong bao.", 5, "24/03/2002");
+        ContentValues cv11= createContentValuesThongBao("Ban vua cos thong bao.", 3, "24/03/2002");
+        ContentValues cv12= createContentValuesThongBao("Ban vua cos thong bao.", 2, "24/03/2002");
+        ContentValues cv13= createContentValuesThongBao("Ban vua cos thong bao.", 1, "24/03/2002");
+        ContentValues cv14= createContentValuesThongBao("Ban vua cos thong bao.", 3, "24/03/2002");
+        ContentValues cv15= createContentValuesThongBao("Ban vua cos thong bao.", 4, "24/03/2002");
         thongBao.add(cv1);
         thongBao.add(cv2);
         thongBao.add(cv3);
         thongBao.add(cv4);
+        thongBao.add(cv5);
+        thongBao.add(cv6);
+        thongBao.add(cv7);
+        thongBao.add(cv8);
+        thongBao.add(cv9);
+        thongBao.add(cv10);
+        thongBao.add(cv11);
+        thongBao.add(cv12);
+        thongBao.add(cv13);
+        thongBao.add(cv14);
+        thongBao.add(cv15);
+
         thongBao.forEach(f ->{
             db.insert(TABLE_THONG_BAO, null, f);
         });
@@ -249,8 +303,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues cv1 = createContentValuesUser("Đức Hoàng", "admin", "1","hoangbrato@gmail.com", "ADMIN");
         ContentValues cv2 = createContentValuesUser("Minh Hoàng ", "user", "1", "minhhoang2401@gmail.com", "USER");
+        ContentValues cv3 = createContentValuesUser("Toàn Mỹ ", "user", "1", "toanmy@gmail.com", "USER");
+        ContentValues cv4 = createContentValuesUser("Thanh Thuyen ", "user", "1", "thanhthuyen@gmail.com", "USER");
+        ContentValues cv5 = createContentValuesUser("Hoàng Ân ", "user", "1", "hoangan@gmail.com", "USER");
         user.add(cv1);
         user.add(cv2);
+        user.add(cv3);
+        user.add(cv4);
+        user.add(cv5);
 
         user.forEach(f ->{
             db.insert(TABLE_USER, null, f);
@@ -312,16 +372,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Không tìm thấy dòng nào cần cập nhật hoặc có lỗi xảy ra
         }
     }
+    public void updateUser(int idUser, String email, String name, String matKhau) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_NAME, name);
+        values.put(COLUMN_PASSWORD, matKhau);
+
+        // Xác định điều kiện cho câu lệnh UPDATE
+        String whereClause = COLUMN_USER_ID + " = ?";
+        String[] whereArgs = { String.valueOf(idUser) };
+
+        // Thực hiện câu lệnh UPDATE
+        int rowsUpdated = db.update(TABLE_USER, values, whereClause, whereArgs);
+
+        db.close();
+
+        if (rowsUpdated > 0) {
+            // Cập nhật thành công
+        } else {
+            // Không tìm thấy dòng nào cần cập nhật hoặc có lỗi xảy ra
+        }
+    }
     public void addComment(){
         SQLiteDatabase db = this.getWritableDatabase();
         List<ContentValues> buaAn = new ArrayList<>();
         ContentValues cv1 = createContentValuesComment("Ngon quá đi", 1, 1);
-        ContentValues cv2 = createContentValuesComment("Ngon thật á", 1, 1);
-        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 1, 1);
+        ContentValues cv2 = createContentValuesComment("Ngon thật á", 2, 3);
+        ContentValues cv3 = createContentValuesComment("Ngon quá đi mất", 3, 2);
+        ContentValues cv4 = createContentValuesComment("Ngon quá đi mất", 4, 2);
+        ContentValues cv5 = createContentValuesComment("Món này tuyệt", 3, 3);
+        ContentValues cv6 = createContentValuesComment("Ngon quá đi mất", 5, 1);
+        ContentValues cv7 = createContentValuesComment("Món này tuyệt", 2, 5);
+        ContentValues cv8 = createContentValuesComment("Ngon quá đi mất", 4, 4);
+        ContentValues cv9 = createContentValuesComment("Ngon quá đi mất", 3, 4);
+        ContentValues cv10 = createContentValuesComment("v", 5, 2);
+        ContentValues cv11= createContentValuesComment("Ngon quá đi mất", 3, 3);
+        ContentValues cv12= createContentValuesComment("v", 4, 4);
+        ContentValues cv13 = createContentValuesComment("Ngon quá đi mất", 2, 2);
+        ContentValues cv14= createContentValuesComment("Món này tuyệt", 2, 3);
+        ContentValues cv15= createContentValuesComment("ngon ngon", 3, 2);
 
         buaAn.add(cv1);
         buaAn.add(cv2);
         buaAn.add(cv3);
+        buaAn.add(cv4);
+        buaAn.add(cv5);
+        buaAn.add(cv6);
+        buaAn.add(cv7);
+        buaAn.add(cv8);
+        buaAn.add(cv9);
+        buaAn.add(cv10);
+        buaAn.add(cv11);
+        buaAn.add(cv12);
+        buaAn.add(cv13);
+        buaAn.add(cv14);
+        buaAn.add(cv15);
+
         buaAn.forEach(f ->{
             db.insert(TABLE_COMMENT, null, f);
         });

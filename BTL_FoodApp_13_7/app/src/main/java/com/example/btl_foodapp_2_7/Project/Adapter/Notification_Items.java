@@ -40,10 +40,7 @@ public class Notification_Items extends RecyclerView.Adapter<Notification_Items.
         holder.textView.setText(notification.getText_noti());
         holder.timeTextView.setText(notification.getTime_noti());
         String imageUrl = notifications.get(position).getAvt_noti2(); // Đường dẫn URL của hình ảnh
-//        Glide.with(holder.itemView.getContext())
-//                .load(imageUrl)
-//                .override(500,500 ) // Chỉnh kích thước ảnh ở đây
-//                .into(holder.avatarImageView);
+
     }
 
     @Override

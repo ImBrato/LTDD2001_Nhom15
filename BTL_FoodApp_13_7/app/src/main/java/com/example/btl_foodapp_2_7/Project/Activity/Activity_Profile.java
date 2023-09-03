@@ -40,18 +40,27 @@ public class Activity_Profile extends AppCompatActivity {
             edt_name.setText(name);
             edt_email.setText(email);
             edt_password.setText(password);
-        } else {
-
         }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              boolean checked =  db.updateUserInfo(id, edt_name.getText().toString(), edt_email.getText().toString(), edt_password.getText().toString());
-              if(checked){
-//                  Toast.makeText(get)
-              }
+                DatabaseHelper db = new DatabaseHelper(Activity_Profile.this);
+              String name = edt_name.getText().toString();
+              String email = edt_email.getText().toString();
+              String pass = edt_password.getText().toString();
+                SharedPreferences preferences = Activity_Profile.this.getSharedPreferences("login", Context.MODE_PRIVATE);
+                String username = preferences.getString("username", "");
+                int id = db.getIduserByName(username);
+                if( db.updateUserInfo(id, name, email, pass)){
+                    Toast.makeText(Activity_Profile.this, "Cap nhat thanh cong", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(Activity_Profile.this, "That bai", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+
 
     }
 

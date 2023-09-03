@@ -73,9 +73,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 v.getContext().startActivity(intent);
             }
         });
-//        int drawableResourceID = holder.itemView.getResources().getIdentifier(items.get(position).getPicUrl(), "drawable", holder.itemView.getContext().getPackageName());
-//
-//        Glide.with(holder.itemView.getContext()).load(drawableResourceID).transform(new GranularRoundedCorners(0,0,0,0)).into(holder.pic);
+
         String imageUrl = items.get(position).getPicUrl(); // Đường dẫn URL của hình ảnh
 
         Glide.with(holder.itemView.getContext())
@@ -101,9 +99,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                 int clickedPosition = position+1;
                 Food food= db2.getFoodById(clickedPosition);
                 int luotTim = food.getLuotTim();
-//                if(db2.getSaveFoodByIds(clickedPosition, id)!=null){
-//
-//                }
+
                 if(isChecked){
 
                     int luotTim2 = luotTim+1;

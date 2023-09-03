@@ -37,20 +37,7 @@ public class Fragment_yeu_thich extends Fragment {
         View view = inflater.inflate(R.layout.fragment_yeu_thich, container, false);
 
 
-        // Khởi tạo danh sách thông báo
-//        notificationList = new ArrayList<>();
-//
-//        notificationList.add(new Notification(R.drawable.profile, "Minh Hoàng: Vừa đăng một công thức mới", "10 giờ"));
-//        notificationList.add(new Notification(R.drawable.profile, "Đức Hoàng: Vừa đăng một công thức mới", "8 giờ"));
-//        notificationList.add(new Notification(R.drawable.profile, "Mỹ: Vừa đăng một công thức mới", "9 giờ"));
-//        notificationList.add(new Notification(R.drawable.profile, "Mỹ: Vừa đăng một công thức mới", "9 giờ"));
 
-
-
-
-        // Thêm các thông báo khác vào danh sách ở đây
-
-        // Khởi tạo RecyclerView và Adapter
 
 
         return view;

@@ -87,10 +87,10 @@ public class Fragment_cai_dat extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_cai_dat, container, false);
-        ImageView veChungToiButton = view.findViewById(R.id.VeChungToi);
-        ImageView trungTamHoTroButton = view.findViewById(R.id.TrungTamHoTro);
-        ImageView daLuuButton = view.findViewById(R.id.imageViewDaLuu);
-        ImageView chinhSachButton = view.findViewById(R.id.ChinhSachNguoiDung);
+        TextView veChungToiButton = view.findViewById(R.id.VeChungToi);
+        TextView trungTamHoTroButton = view.findViewById(R.id.TrungTamHoTro);
+        TextView daLuuButton = view.findViewById(R.id.imageViewDaLuu);
+        TextView chinhSachButton = view.findViewById(R.id.ChinhSachNguoiDung);
 
         profile_setting = view.findViewById(R.id.profile_setting);
 
